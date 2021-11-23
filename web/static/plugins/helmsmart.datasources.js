@@ -294,11 +294,11 @@
 						value: "https://helmsmart-ello.herokuapp.com/freeboard_switch_bank_status"
 					},
 					{
-						name: "Device Stat",
+						name: "Device Stats",
 						value: "https://helmsmart-ello.herokuapp.com/get_dbstat"
-					}
+					},
 					{
-						name: "Stats",
+						name: "All Stats",
 						value: "https://helmsmart-ello.herokuapp.com/get_dbstats_html"
 					}
 
