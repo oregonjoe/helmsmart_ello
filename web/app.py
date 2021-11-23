@@ -17035,25 +17035,12 @@ def get_dbstat():
 
   response = None
   
-  measurement = "HelmSmartDB"
+  #measurement = "HelmSmartDB"
   
   stat0 = '---'
   stat1 = '---'
   stat2 = '---'
-  stat3 = '---'
-  stat4 = '---'
-  stat5 = '---'
-  stat6 = '---'
-  stat7 = '---'
-  stat8 = '---'
-  stat9 = '---'
-  stat10 = '---'
-  stat11 = '---'
-  stat12 = '---'
-  stat13 = '---'
-  stat14 = '---'
-  stat15 = '---'
-  stat16 = '---'
+
 
 
   #conn = db_pool.getconn()
@@ -17149,119 +17136,103 @@ def get_dbstat():
     #log.info("freeboard Get InfluxDB series keys %s", keys)
 
 
-
-
-    strvalue=""
+    jsondata=[]
+    #jsonkey=[]
+    #strvaluekey = {'Series': SERIES_KEY, 'start': start,  'end': end, 'resolution': resolution}
+    #jsonkey.append(strvaluekey)
+    #print 'freeboard start processing data points:'
     
-    for series in keys:
-      #log.info("freeboard Get InfluxDB series key %s", series)
-      #log.info("freeboard Get InfluxDB series tags %s ", series['tags'])
-      #log.info("freeboard Get InfluxDB series columns %s ", series['columns'])
-      #log.info("freeboard Get InfluxDB series values %s ", series['values'])
+    #log.info("freeboard jsonkey..%s", jsonkey )
+    try:
+    
+      strvalue = ""
+      value1 = '---'
+      value2 = '---'
 
-      """        
-      values = series['values']
-      for value in values:
-        log.info("freeboard Get InfluxDB series time %s", value[0])
-        log.info("freeboard Get InfluxDB series mean %s", value[1])
-      """
+      records=[]
+  
+      total_records=[]
 
-      tag = series['tags']
-      log.info("freeboard Get InfluxDB series tags2 %s ", tag)
+      ts =startepoch*1000       
+      points = list(response.get_points())
 
-      #mydatetimestr = str(fields['time'])
-      strvaluekey = {'Series': series['tags'], 'start': startepoch,  'end': endepoch}
-      jsonkey.append(strvaluekey)        
+      #log.info('freeboard:  InfluxDB-Cloud points%s:', points)
 
-      log.info("freeboard Get InfluxDB series tags3 %s ", tag['deviceid'])
+      for point in points:
+        #log.info('freeboard:  InfluxDB-Cloud point%s:', point)
+        value1 = '---'
+        value2 = '---'
 
-      
-      for point in series['values']:
-        fields = {}
-        for key, val in zip(series['columns'], point):
-          fields[key] = val
+        
+        if point['time'] is not None:
+          mydatetimestr = str(point['time'])
+          mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
+
+          mydatetime_utctz = mydatetime.replace(tzinfo=timezone('UTC'))
+          mydatetimetz = mydatetime_utctz.astimezone(timezone(mytimezone))
+
+          #dtt = mydatetime.timetuple()       
+          dtt = mydatetimetz.timetuple()
+          ts = int(mktime(dtt)*1000)
           
-        #log.info("freeboard Get InfluxDB series points %s , %s", fields['time'], fields['records'])
+        if point['records'] is not None:
+          #value1 = convertfbunits( point['records'], convertunittype('rpm', units))
+          records.append({'epoch':ts, 'value':int(point['records'])})
+        else
+          records.append({'epoch':ts, 'value':'---'})         
+        
 
-        if fields['records'] != None:
+         
 
-          #devicename = ""
-          #deviceid = tag['deviceid']
-          #for record in records:
-          #log.info("get_dbstat deviceid %s - devicename %s", record[0], record[1])    
-          if tag['deviceid'] == deviceid:
-            #devicename = record[1]
-
-            #strvalue = {'epoch': fields['time'], 'source':tag['deviceid'], 'name':devicename, 'value': fields['records']}        
-            strvalue = {'epoch': fields['time'],  'records': fields['records']}
-            jsondata.append(strvalue)
-
-
-
-
-
-    jsondata = sorted(jsondata,key=itemgetter('epoch'), reverse=True)
-
-    total = 0
-
-    for stat in jsondata:
-      if stat['records'] != None:
-        total = total + float(stat['records'])
-
-    """        
-    if len(jsondata) > 0:
       mydatetimestr = str(jsondata[0]['epoch'])
-      stat0 = str(jsondata[0]['source']) + ":" + str(jsondata[0]['name']) + " = " +  str(jsondata[0]['value'])
-    """        
+      mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
 
-    mydatetimestr = str(jsondata[0]['epoch'])
-    mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
+      #log.info('freeboard: freeboard returning data values wind_speed:%s, wind_direction:%s  ', stat1,stat2)            
 
-    #log.info('freeboard: freeboard returning data values wind_speed:%s, wind_direction:%s  ', stat1,stat2)            
-
-    callback = request.args.get('callback')
-    myjsondate = mydatetime.strftime("%B %d, %Y %H:%M:%S")
+      callback = request.args.get('callback')
+      myjsondate = mydatetime.strftime("%B %d, %Y %H:%M:%S")
 
 
-    #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'update':'True','total':int(total),'stat0':})
-    #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'Resolution':resolution, 'DeviceID':deviceid,'DeviceName':devicename,'total records':int(total),'records':jsondata})
-    #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':list(reversed(jsondata))})
-    #return '{0}({1})'.format(callback, {'update':'False', 'status':'deviceid error' })
-    return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':'deviceid error' })
-  
+      #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'update':'True','total':int(total),'stat0':})
+      #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'Resolution':resolution, 'DeviceID':deviceid,'DeviceName':devicename,'total records':int(total),'records':jsondata})
+      #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':list(reversed(jsondata))})
+      #return '{0}({1})'.format(callback, {'update':'False', 'status':'deviceid error' })
+      #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':'deviceid error' })
+      return '{0}({1})'.format(callback, {'date_time':myjsondate, 'update':'True','records':list(reversed(records)})     
+   
 
-  except TypeError, e:
-      log.info('get_influxdbcloud_data: Type Error in InfluxDB mydata append %s:  ', response)
-      log.info('get_influxdbcloud_data: Type Error in InfluxDB mydata append %s:  ' % str(e))
-          
-  except KeyError, e:
-      log.info('get_influxdbcloud_data: Key Error in InfluxDB mydata append %s:  ', response)
-      log.info('get_influxdbcloud_data: Key Error in InfluxDB mydata append %s:  ' % str(e))
+    except TypeError, e:
+        log.info('get_dbstat: Type Error in InfluxDB mydata append %s:  ', response)
+        log.info('get_dbstat: Type Error in InfluxDB mydata append %s:  ' % str(e))
+            
+    except KeyError, e:
+        log.info('get_dbstat: Key Error in InfluxDB mydata append %s:  ', response)
+        log.info('get_dbstat: Key Error in InfluxDB mydata append %s:  ' % str(e))
 
-  except NameError, e:
-      log.info('get_influxdbcloud_data: Name Error in InfluxDB mydata append %s:  ', response)
-      log.info('get_influxdbcloud_data: Name Error in InfluxDB mydata append %s:  ' % str(e))
-          
-  except IndexError, e:
-      log.info('get_influxdbcloud_data: Index error in InfluxDB mydata append %s:  ', response)
-      log.info('get_influxdbcloud_data: Index Error in InfluxDB mydata append %s:  ' % str(e))  
+    except NameError, e:
+        log.info('get_dbstat: Name Error in InfluxDB mydata append %s:  ', response)
+        log.info('get_dbstat: Name Error in InfluxDB mydata append %s:  ' % str(e))
+            
+    except IndexError, e:
+        log.info('get_dbstat: Index error in InfluxDB mydata append %s:  ', response)
+        log.info('get_dbstat: Index Error in InfluxDB mydata append %s:  ' % str(e))  
 
-  except ValueError, e:
-    log.info('get_influxdbcloud_data: Index error in InfluxDB mydata append %s:  ', response)
-    log.info('get_influxdbcloud_data: Value Error in InfluxDB  %s:  ' % str(e))
+    except ValueError, e:
+      log.info('get_dbstat: Index error in InfluxDB mydata append %s:  ', response)
+      log.info('get_dbstat: Value Error in InfluxDB  %s:  ' % str(e))
 
-  except AttributeError, e:
-    log.info('get_influxdbcloud_data: Index error in InfluxDB mydata append %s:  ', response)
-    log.info('get_influxdbcloud_data: AttributeError in InfluxDB  %s:  ' % str(e))     
+    except AttributeError, e:
+      log.info('get_dbstat: Index error in InfluxDB mydata append %s:  ', response)
+      log.info('get_dbstat: AttributeError in InfluxDB  %s:  ' % str(e))     
 
-  except InfluxDBClientError, e:
-    log.info('get_influxdbcloud_data: Exception Error in InfluxDB  %s:  ' % str(e))     
-  
-  except:
-    log.info('get_influxdbcloud_data: Error in geting freeboard response %s:  ', strvalue)
-    e = sys.exc_info()[0]
-    log.info('get_influxdbcloud_data: Error in geting freeboard ststs %s:  ' % e)
-    return jsonify( message='error processing data 3' , status='error')        
+    except InfluxDBClientError, e:
+      log.info('get_dbstat: Exception Error in InfluxDB  %s:  ' % str(e))     
+    
+    except:
+      log.info('get_dbstat: Error in geting freeboard response %s:  ', strvalue)
+      e = sys.exc_info()[0]
+      log.info('get_dbstat: Error in geting freeboard ststs %s:  ' % e)
+      return jsonify( message='error processing data 3' , status='error')        
 
   callback = request.args.get('callback')
   return '{0}({1})'.format(callback, {'update':'False', 'status':'error' })
