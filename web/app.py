@@ -17226,8 +17226,8 @@ def get_dbstat():
     #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'update':'True','total':int(total),'stat0':})
     #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'Resolution':resolution, 'DeviceID':deviceid,'DeviceName':devicename,'total records':int(total),'records':jsondata})
     #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':list(reversed(jsondata))})
-    return '{0}({1})'.format(callback, {'update':'False', 'status':'deviceid error' })
-
+    #return '{0}({1})'.format(callback, {'update':'False', 'status':'deviceid error' })
+    return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':'deviceid error' })
   
 
   except TypeError, e:
