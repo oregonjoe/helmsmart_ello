@@ -17184,13 +17184,13 @@ def get_dbstat():
 
          
 
-      mydatetimestr = str(jsondata[0]['epoch'])
-      mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
+      #mydatetimestr = str(jsondata[0]['epoch'])
+      #mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
 
       #log.info('freeboard: freeboard returning data values wind_speed:%s, wind_direction:%s  ', stat1,stat2)            
 
       callback = request.args.get('callback')
-      myjsondate = mydatetime.strftime("%B %d, %Y %H:%M:%S")
+      myjsondate= mydatetimetz.strftime("%B %d, %Y %H:%M:%S")  
 
 
       #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'Interval':str(Interval),'update':'True','total':int(total),'stat0':})
