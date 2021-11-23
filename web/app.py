@@ -17234,8 +17234,14 @@ def get_dbstat():
       log.info('get_dbstat: Error in geting freeboard ststs %s:  ' % e)
       return jsonify( message='error processing data 3' , status='error')        
 
-  callback = request.args.get('callback')
-  return '{0}({1})'.format(callback, {'update':'False', 'status':'error' })
+  except:
+    log.info('get_dbstat: Error in geting freeboard response %s:  ', strvalue)
+    e = sys.exc_info()[0]
+    log.info('get_dbstat: Error in geting freeboard ststs %s:  ' % e)
+    return jsonify( message='error processing data 3' , status='error') 
+
+  #callback = request.args.get('callback')
+  #return '{0}({1})'.format(callback, {'update':'False', 'status':'error' })
 
   
 
