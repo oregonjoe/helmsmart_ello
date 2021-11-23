@@ -17035,7 +17035,7 @@ def get_dbstat():
 
   response = None
   
-  #measurement = "HelmSmartDB"
+  measurement = "HelmSmartDB"
   
   stat0 = '---'
   stat1 = '---'
