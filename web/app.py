@@ -1226,6 +1226,78 @@ def getdashboardjson(prefuid):
 
     return ""  
 
+def getdeviceids(useremail):
+
+    conn = db_pool.getconn()
+
+    log.info("freeboard getdeviceids data Query %s", useremail)
+    #query = "select deviceid from user_devices where deviceapikey = %s"
+
+    #query = ("select deviceid from user_devices where deviceapikey = '{}' ") \
+    #            .format(deviceapikey )
+
+
+    #log.info("freeboard getedeviceid Query %s", query)
+
+
+    try:
+    # first check db to see if deviceapikey is matched to device id
+
+        cursor = conn.cursor()
+        #cursor.execute(query, (deviceapikey,))
+        #cursor.execute("select deviceid from user_devices where deviceapikey = '%s'" % deviceapikey)
+        #key=('bfeba0c3c5244269b4c8d276872519a6',)
+        cursor.execute("select deviceid from user_devices where useremail = %s" , (useremail,))
+        #response= cursor.query(query)
+        
+        records = cursor.fetchall()
+        
+        log.info('freeboard getdeviceids: records %s:  ', records)
+        
+        result = []
+        for record in records:
+          log.info('freeboard getdeviceids: record %s:  ', record)
+          
+          device={}
+          #myjson = json.loads(record)
+          #devicename=myjson['devicename']
+          #deviceid=myjson['deviceid']
+          #alexainterface=myjson['alexainterface']
+          #alexafriendlyname=myjson['alexafriendlyname']
+          #device['alexafriendlyname']=myjson['alexafriendlyname']
+          #devicekey=myjson['series_key']
+          result.append(record[0])
+          
+        #return jsonify(device_params = result)
+        return result
+
+    except TypeError, e:
+        log.info('freeboard: TypeError in geting deviceids  %s:  ', deviceapikey)
+        log.info('freeboard: TypeError in geting deviceids  %s:  ' % str(e))
+            
+    except KeyError, e:
+        log.info('freeboard: KeyError in geting deviceids  %s:  ', deviceapikey)
+        log.info('freeboard: KeyError in geting deviceids  %s:  ' % str(e))
+
+    except NameError, e:
+        log.info('freeboard: NameError in geting deviceids  %s:  ', deviceapikey)
+        log.info('freeboard: NameError in geting deviceids  %s:  ' % str(e))
+            
+    except IndexError, e:
+        log.info('freeboard: IndexError in geting deviceids  %s:  ', deviceapikey)
+        log.info('freeboard: IndexError in geting deviceids  %s:  ' % str(e))  
+
+
+    except:
+        log.info('freeboard: Error in geting  deviceids %s:  ', deviceapikey)
+        e = sys.exc_info()[0]
+        log.info('freeboard: Error in geting deviceids  %s:  ' % str(e))
+
+    # cursor.close
+    db_pool.putconn(conn)                       
+
+    return ""
+
 
 
 def getedeviceid(deviceapikey):
@@ -17542,6 +17614,9 @@ def get_dbstats_html():
   
   records = cursor.fetchall()
 
+  for record in records:
+        log.info("get_dbstats_html deviceIDs %s", record[0])
+
   db_pool.putconn(conn)   
 
 
@@ -17629,7 +17704,7 @@ def get_dbstats_html():
     #log.info("freeboard Get InfluxDB response %s", response)
 
     keys = response.raw.get('series',[])
-    #log.info("freeboard Get InfluxDB series keys %s", keys)
+    log.info("freeboard get_dbstats_html Get InfluxDB series keys %s", keys)
 
 
 
@@ -17637,10 +17712,10 @@ def get_dbstats_html():
     strvalue=""
     
     for series in keys:
-      #log.info("freeboard Get InfluxDB series key %s", series)
-      #log.info("freeboard Get InfluxDB series tags %s ", series['tags'])
-      #log.info("freeboard Get InfluxDB series columns %s ", series['columns'])
-      #log.info("freeboard Get InfluxDB series values %s ", series['values'])
+      log.info("freeboard get_dbstats_html Get InfluxDB series key %s", series)
+      #log.info("freeboard get_dbstats_html Get InfluxDB series tags %s ", series['tags'])
+      #log.info("freeboard get_dbstats_html Get InfluxDB series columns %s ", series['columns'])
+      #log.info("freeboard get_dbstats_html Get InfluxDB series values %s ", series['values'])
 
       """        
       values = series['values']
@@ -17653,7 +17728,7 @@ def get_dbstats_html():
       devicename = ""
       deviceid = tag['deviceid']
       for record in records:
-        #log.info("get_dbstats deviceid %s - devicename %s", record[0], record[1])    
+        log.info("get_dbstats deviceid %s - devicename %s", record[0], record[1])    
         if deviceid == record[0]:
           devicename = record[1]
               
