@@ -16982,7 +16982,7 @@ def get_dbstat():
 
   deviceapikey = request.args.get('apikey','')
   Interval = request.args.get('interval',"5min")
-  rollup = request.args.get('rollup',"sum")
+  rollup = request.args.get('mode',"sum")
 
   resolution = request.args.get('resolution',"")
   mytimezone = request.args.get('timezone',"UTC")
