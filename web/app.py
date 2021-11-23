@@ -17198,7 +17198,7 @@ def get_dbstat():
       #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':list(reversed(jsondata))})
       #return '{0}({1})'.format(callback, {'update':'False', 'status':'deviceid error' })
       #return '{0}({1})'.format(callback, {'date_time':myjsondate, 'records':'deviceid error' })
-      return '{0}({1})'.format(callback, {'date_time':myjsondate, 'update':'True','records':list(reversed(records)})     
+      return '{0}({1})'.format(callback, {'date_time':myjsondate, 'update':'True','records':list(reversed(records))})     
    
 
     except TypeError, e:
