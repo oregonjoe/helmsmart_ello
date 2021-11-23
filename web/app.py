@@ -17076,7 +17076,7 @@ def get_dbstat():
     #rollup = "mean"
 
 
-    query = ('select {}(records) AS records FROM {} '
+    query = ('select {}(write_records) AS records FROM {} '
                      'where time > {}s and time < {}s '
                      'group by *, time({}s) ') \
                 .format(rollup,  measurement, 
