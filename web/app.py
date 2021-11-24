@@ -17179,7 +17179,8 @@ def get_dbstat():
           #value1 = convertfbunits( point['records'], convertunittype('rpm', units))
           records.append({'epoch':ts, 'value':int(point['records'])})
         else:
-          records.append({'epoch':ts, 'value':'---'})         
+          #records.append({'epoch':ts, 'value':'---'})
+          records.append({'epoch':ts,  'value':int(0)})
         
 
          
