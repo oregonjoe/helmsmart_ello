@@ -857,6 +857,10 @@
 					{
 						name: "Min",
 						value: "min"
+					},
+					{
+						name: "Sum",
+						value: "sum"
 					}
 					
 				]
