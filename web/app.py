@@ -14096,7 +14096,8 @@ def get_dbstat():
       jsonkey.append(strvaluekey)        
 
       #log.info("freeboard Get InfluxDB series tags3 %s ", tag['deviceid'])
-
+      # initialize datetime to default
+      mydatetime = datetime.datetime.now()
       
       for point in series['values']:
         fields = {}
@@ -14115,7 +14116,34 @@ def get_dbstat():
             #devicename = record[1]
 
             #strvalue = {'epoch': fields['time'], 'source':tag['deviceid'], 'name':devicename, 'value': fields['records']}        
-            strvalue = {'epoch': fields['time'],  'records': fields['records']}
+            #strvalue = {'epoch': fields['time'],  'records': fields['records']}
+            #strvalue = {'epoch': fields['time'],  'value': fields['records']}
+            mydatetimestr = str(fields['time'])
+            #log.info('freeboard_environmental:: mydatetimestr %s:  ' % mydatetimestr)
+            
+            # convert string to datetime opject
+            mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%S%z')
+            #log.info('freeboard_environmental:: mydatetime %s:  ' % mydatetime)
+
+            # set timezone of new datetime opbect
+            mydatetimetz = mydatetime.replace(tzinfo=ZoneInfo(mytimezone))
+            #log.info('freeboard_environmental:: mydatetimetz %s:  ' % mydatetimetz)    
+
+            ## This dosnt work for python 3.11 anymore
+            ## throws an OverFlow error
+            ##dtt = mydatetimetz.timetuple()
+            ##ts = int(mktime(dtt)*1000)
+            ## So we need to convert datetime directly to seconds and add in timezone offesets
+
+            # get seconds offset for selected timezone
+            tzoffset = mydatetimetz.utcoffset().total_seconds()
+            #log.info('freeboard_environmental:: tzoffset %s:  ' % tzoffset)           
+
+            # adjust GMT time for slected timezone for display purposes
+            ts = int((mydatetime.timestamp() + tzoffset) * 1000 )
+            #log.info('freeboard_environmental:: ts %s:  ' % ts)
+            
+            strvalue = {'epoch': ts,  'value': fields['records']}
             jsondata.append(strvalue)
 
 
@@ -14127,8 +14155,8 @@ def get_dbstat():
     total = 0
 
     for stat in jsondata:
-      if stat['records'] != None:
-        total = total + float(stat['records'])
+      if stat['value'] != None:
+        total = total + float(stat['value'])
 
     """        
     if len(jsondata) > 0:
@@ -14136,12 +14164,13 @@ def get_dbstat():
       stat0 = str(jsondata[0]['source']) + ":" + str(jsondata[0]['name']) + " = " +  str(jsondata[0]['value'])
     """        
 
-    mydatetimestr = str(jsondata[0]['epoch'])
-    mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
+    #mydatetimestr = str(jsondata[0]['epoch'])
+    #mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
 
     #log.info('freeboard: freeboard returning data values wind_speed:%s, wind_direction:%s  ', stat1,stat2)            
 
     callback = request.args.get('callback')
+    # use the last valid timestamp for the update
     myjsondate = mydatetime.strftime("%B %d, %Y %H:%M:%S")
 
 
