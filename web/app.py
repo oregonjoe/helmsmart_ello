@@ -8,6 +8,8 @@ import json
 #import md5
 import hashlib
 import base64
+from operator import itemgetter
+
 
 import requests
 from requests.exceptions import HTTPError
@@ -14307,7 +14309,7 @@ def get_dbstats():
     jsonkey=[]
     #strvaluekey = {'Series': SERIES_KEY, 'start': start,  'end': end, 'resolution': resolution}
     #jsonkey.append(strvaluekey)
-    print('inFluxDB start processing data points:')
+    #print('inFluxDB start processing data points:')
     #log.info("freeboard Get InfluxDB response %s", response)
 
     keys = response.raw.get('series',[])
@@ -14346,7 +14348,7 @@ def get_dbstats():
         for key, val in zip(series['columns'], point):
           fields[key] = val
           
-        log.info("freeboard Get InfluxDB series points %s , %s", fields['time'], fields['records'])
+        #log.info("freeboard Get InfluxDB series points %s , %s", fields['time'], fields['records'])
         
         if fields['records'] != None:
 
