@@ -1,0 +1,90 @@
+{
+	"version": 1,
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "highcharts-timeseries",
+					"settings": {
+						"showledgen": false,
+						"blocks": 4,
+						"chartType": "area",
+						"xaxis": "{\"title\":{\"text\" : \"Time\"}, \"type\": \"datetime\", \"floor\":0}",
+						"yaxis": "{\"title\":{\"text\" : \"Values\"}, \"minorTickInterval\":\"auto\", \"floor\":0}",
+						"series1": "datasources[\"ELLO_Center_TBL140\"][\"records\"]",
+						"series1color": "0",
+						"series2color": "0",
+						"series3color": "0"
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "ELLO_Port_TBL140",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "be97b584371254042e55f585068d95f2",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "3600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+				{
+			"name": "ELLO_Center_TBL140",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "c76a3731a78b1db5a75063aa1f0099ea",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "3600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+				{
+			"name": "ELLO_Stbd_TBL140",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "528978d31dcab1964d610240425f3af1",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "3600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		}
+	],
+	"columns": 3
+}

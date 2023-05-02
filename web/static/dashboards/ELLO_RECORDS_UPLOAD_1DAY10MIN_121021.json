@@ -1,0 +1,442 @@
+{
+	"version": 1,
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+			"widgets": [
+				{
+					"type": "highcharts-timeseries",
+					"settings": {
+						"showledgen": false,
+						"blocks": 4,
+						"chartType": "area",
+						"title": "TBL124 - Records Uploaded - 24 hour",
+						"xaxis": "{\"title\":{\"text\" : \"Time\"}, \"type\": \"datetime\", \"floor\":0}",
+						"yaxis": "{\"title\":{\"text\" : \"Values\"}, \"minorTickInterval\":\"auto\", \"floor\":0}",
+						"series1": "datasources[\"ELLO_Port_TBL124\"][\"records\"]",
+						"series1label": "TBL124-PORT",
+						"series1color": "0",
+						"series2": "datasources[\"ELLO_Center_TBL124\"][\"records\"]",
+						"series2label": "TBL124-CENTER",
+						"series2color": "2",
+						"series3": "datasources[\"ELLO_Stbd_TBL124\"][\"records\"]",
+						"series3label": "TBL124-STBD",
+						"series3color": "10"
+					}
+				}
+			]
+		},
+		{
+			"title": "TBL122",
+			"width": 1,
+			"row": {
+				"3": 11
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+						"widgets": [
+				{
+					"type": "highcharts-timeseries",
+					"settings": {
+						"showledgen": false,
+						"blocks": 4,
+						"chartType": "area",
+						"title": "TBL122 - Records Uploaded - 24 hour",
+						"xaxis": "{\"title\":{\"text\" : \"Time\"}, \"type\": \"datetime\", \"floor\":0}",
+						"yaxis": "{\"title\":{\"text\" : \"Values\"}, \"minorTickInterval\":\"auto\", \"floor\":0}",
+						"series1": "datasources[\"ELLO_Port_TBL122\"][\"records\"]",
+						"series1label": "TBL122-PORT",
+						"series1color": "0",
+						"series2": "datasources[\"ELLO_Center_TBL122\"][\"records\"]",
+						"series2label": "TBL122-CENTER",
+						"series2color": "2",
+						"series3": "datasources[\"ELLO_Stbd_TBL122\"][\"records\"]",
+						"series3label": "TBL122-STBD",
+						"series3color": "10"
+					}
+				}
+			]
+		},
+		{
+			"title": "TBL140",
+			"width": 1,
+			"row": {
+				"3": 15
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+						"widgets": [
+				{
+					"type": "highcharts-timeseries",
+					"settings": {
+						"showledgen": false,
+						"blocks": 4,
+						"chartType": "area",
+						"title": "TBL140 - Records Uploaded - 24 hour",
+						"xaxis": "{\"title\":{\"text\" : \"Time\"}, \"type\": \"datetime\", \"floor\":0}",
+						"yaxis": "{\"title\":{\"text\" : \"Values\"}, \"minorTickInterval\":\"auto\", \"floor\":0}",
+						"series1": "datasources[\"ELLO_Port_TBL140\"][\"records\"]",
+						"series1label": "TBL140-PORT",
+						"series1color": "0",
+						"series2": "datasources[\"ELLO_Center_TBL140\"][\"records\"]",
+						"series2label": "TBL140-CENTER",
+						"series2color": "2",
+						"series3": "datasources[\"ELLO_Stbd_TBL140\"][\"records\"]",
+						"series3label": "TBL140-STBD",
+						"series3color": "10"
+					}
+				}
+			]
+		},
+		{
+			"title": "TBL100",
+			"width": 1,
+			"row": {
+				"3": 19
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+						"widgets": [
+				{
+					"type": "highcharts-timeseries",
+					"settings": {
+						"showledgen": false,
+						"blocks": 4,
+						"chartType": "area",
+						"title": "TBL100 - Records Uploaded - 24 hour",
+						"xaxis": "{\"title\":{\"text\" : \"Time\"}, \"type\": \"datetime\", \"floor\":0}",
+						"yaxis": "{\"title\":{\"text\" : \"Values\"}, \"minorTickInterval\":\"auto\", \"floor\":0}",
+						"series1": "datasources[\"ELLO_Port_TBL100\"][\"records\"]",
+						"series1label": "TBL100-PORT",
+						"series1color": "0",
+						"series2": "datasources[\"ELLO_Center_TBL100\"][\"records\"]",
+						"series2label": "TBL100-CENTER",
+						"series2color": "2",
+						"series3": "datasources[\"ELLO_Stbd_TBL100\"][\"records\"]",
+						"series3label": "TBL100-STBD",
+						"series3color": "10"
+					}
+				}
+			]
+		},
+		{
+			"title": "TBL134",
+			"width": 1,
+			"row": {
+				"3": 23
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 3,
+						"widgets": [
+				{
+					"type": "highcharts-timeseries",
+					"settings": {
+						"showledgen": false,
+						"blocks": 4,
+						"chartType": "area",
+						"title": "TBL100 - Records Uploaded - 24 hour",
+						"xaxis": "{\"title\":{\"text\" : \"Time\"}, \"type\": \"datetime\", \"floor\":0}",
+						"yaxis": "{\"title\":{\"text\" : \"Values\"}, \"minorTickInterval\":\"auto\", \"floor\":0}",
+						"series1": "datasources[\"ELLO_Port_TBL136\"][\"records\"]",
+						"series1label": "TBL136-PORT",
+						"series1color": "0",
+						"series2": "datasources[\"ELLO_Center_TBL136\"][\"records\"]",
+						"series2label": "TBL136-CENTER",
+						"series2color": "2",
+						"series3": "datasources[\"ELLO_Stbd_TBL136\"][\"records\"]",
+						"series3label": "TBL136-STBD",
+						"series3color": "10"
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "ELLO_Port_TBL124",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "be97b584371254042e55f585068d95f2",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Center_TBL124",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "c76a3731a78b1db5a75063aa1f0099ea",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Stbd_TBL124",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "528978d31dcab1964d610240425f3af1",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Port_TBL122",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "f604c89511058e176445c57e2cb62032",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Center_TBL122",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "5940988f8db3a161812cef9fd7e9306f",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Stbd_TBL122",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "cb121f721b0c1d89d238ed5127c69ea2",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},{
+			"name": "ELLO_Port_TBL140",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "d83174e8d1ff4f93ea3e958715851bb0",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Center_TBL140",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "66369c6b80dc1980e0cf2962bc10e8cc",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Stbd_TBL140",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "2d17388fb8bb49c5d569842a6bf9b763",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},{
+			"name": "ELLO_Port_TBL100",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "164fc8c703c5d26aea7981300416b5da",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Center_TBL100",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "b00618dedfd229db7353a7d9f281a891",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Stbd_TBL100",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "89179532b56452ac88b83dcff70b597e",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Port_TBL136",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "8a6ec89c6a1647be0e9f178cd5da0c13",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Center_TBL136",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "5c4d979ba929c61d1a834eb0aa0c8dc1",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		},
+		{
+			"name": "ELLO_Stbd_TBL136",
+			"type": "JSON",
+			"settings": {
+				"url": "https://helmsmart-ello.herokuapp.com/get_dbstat",
+				"apikey": "ce9f8857960edb4967cb633366390a3d",
+				"refresh": 60,
+				"span": "1day",
+				"resolution": "600",
+				"source": "",
+				"instance": "",
+				"index": "",
+				"type": "",
+				"timezone": "UTC",
+				"units": "US",
+				"mode": "median"
+			}
+		}
+	],
+	"columns": 3
+}
