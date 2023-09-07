@@ -1749,7 +1749,7 @@ def getepochtimes(Interval):
             elif Interval == "1month":
                 resolution = 60*60*24*30
                 startepoch = endepoch - (resolution * 1)
-                oldtime = datetime.datetime.now() - datetime.timedelta(months=1)
+                oldtime = datetime.datetime.now() - datetime.timedelta(days=30)
             else:
                 resolution = 60
                 startepoch = endepoch - (resolution * 1)
@@ -14599,7 +14599,8 @@ def get_dbstats_html():
       resolution = 600
     elif Interval == "1day":
       resolution = 7200
-
+    elif Interval == "1month":
+      resolution = 86400
       
     resolutionstr = "PT" + str(resolution) + "S"
 
