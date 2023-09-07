@@ -14746,30 +14746,98 @@ def get_dbstats_html():
     if Interval == "1hour":
       period = 5
       units = "min"
+      
+      stathtml = stathtml + "<td>" +  str(int(period) * 1) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 2) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 3) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 4) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 5) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 6) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 7) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 8) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 9) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 10) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 11) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 12) +units + "</td>"
+
+      stathtml = stathtml + "</tr>"
+
+      
 
     elif Interval == "2hour":
       period = 10
       units = "min"
+      stathtml = stathtml + "<td>" +  str(int(period) * 1) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 2) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 3) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 4) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 5) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 6) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 7) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 8) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 9) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 10) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 11) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 12) +units + "</td>"
+
+      stathtml = stathtml + "</tr>"
       
     elif Interval == "1day":
       period = 2
       units = "hr"
       
-    stathtml = stathtml + "<td>" +  str(int(period) * 1) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 2) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 3) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 4) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 5) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 6) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 7) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 8) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 9) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 10) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 11) +units + "</td>"
-    stathtml = stathtml + "<td>" +  str(int(period) * 12) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 1) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 2) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 3) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 4) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 5) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 6) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 7) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 8) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 9) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 10) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 11) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 12) +units + "</td>"
 
-    stathtml = stathtml + "</tr>"
+      stathtml = stathtml + "</tr>"
 
+
+    elif Interval == "1month":
+      period = 2
+      units = "d"
+      
+      stathtml = stathtml + "<td>" +  str(int(period) * 1) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 2) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 3) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 4) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 5) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 6) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 7) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 8) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 9) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 10) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 11) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 12) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 13) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 14) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 15) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 16) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 17) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 18) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 19) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 20) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 21) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 22) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 23) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 24) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 25) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 26) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 27) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 28) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 29) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 30) +units + "</td>"
+      stathtml = stathtml + "<td>" +  str(int(period) * 31) +units + "</td>"
+      stathtml = stathtml + "</tr>"
     
     #log.info("get_dbstats header2 %s ", stathtml)
 
@@ -14796,20 +14864,57 @@ def get_dbstats_html():
 
     
     stathtml = stathtml + "<tr> <td>" + "" + "</td><td>" + "Totals" + "</td>"
+
+
     try:
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[0]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[1]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[2]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[3]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[4]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[5]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[6]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[7]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[8]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[9]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[10]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[11]) * 0.001) ))  + "</td>"
-      stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[12]) * 0.001) ))  + "</td>"
+      if Interval == "1hour" or Interval == "2hour" or Interval == "1day":
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[0]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[1]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[2]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[3]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[4]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[5]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[6]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[7]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[8]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[9]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[10]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[11]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[12]) * 0.001) ))  + "</td>"
+        
+      elif  Interval == "1month":
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[0]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[1]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[2]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[3]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[4]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[5]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[6]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[7]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[8]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[9]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[10]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[11]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[12]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[13]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[14]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[15]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[16]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[17]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[18]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[19]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[20]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[21]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[22]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[23]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[24]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[25]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[26]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[27]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[28]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[29]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[30]) * 0.001) ))  + "</td>"
+        stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[31]) * 0.001) ))  + "</td>"
     except:
       pass
     
