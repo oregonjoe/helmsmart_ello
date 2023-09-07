@@ -14717,21 +14717,8 @@ def get_dbstats_html():
 
 
     #jsondata = sorted(jsondata,key=itemgetter('value'), reverse=True)
-    totals=[]
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)   
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
-    totals.append(0)
+    totals=[0]*32
+
     
     total = 0
     stathtml = '<table border="0" cellspacing="5" cellpadding="5" style="width:100%; display: block">'
@@ -14803,7 +14790,7 @@ def get_dbstats_html():
 
 
     elif Interval == "1month":
-      period = 2
+      period = 1
       units = "d"
       
       stathtml = stathtml + "<td>" +  str(int(period) * 1) +units + "</td>"
