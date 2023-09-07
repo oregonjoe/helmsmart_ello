@@ -14839,7 +14839,7 @@ def get_dbstats_html():
       stathtml = stathtml + "<td>" +  str(int(period) * 31) +units + "</td>"
       stathtml = stathtml + "</tr>"
     
-    #log.info("get_dbstats header2 %s ", stathtml)
+    log.info("get_dbstats header2 %s ", stathtml)
 
     
     for statdata in jsondata:
@@ -14858,14 +14858,15 @@ def get_dbstats_html():
           stathtml = stathtml + "<td>" +  "---"  + "</td>"
           
         tindex = tindex + 1
-      #log.info("get_dbstats deviceid %s - tindex %s", statdata['source'], tindex)
+        log.info("get_dbstats deviceid %s - tindex %s", statdata['source'], tindex)
         
       stathtml = stathtml + "  </tr>"
 
     
     stathtml = stathtml + "<tr> <td>" + "" + "</td><td>" + "Totals" + "</td>"
 
-
+    log.info("get_dbstats header3 %s ", stathtml)
+    
     try:
       if Interval == "1hour" or Interval == "2hour" or Interval == "1day":
         stathtml = stathtml + "<td>" +    str(float("{0:.1f}".format(int(totals[0]) * 0.001) ))  + "</td>"
@@ -14921,6 +14922,8 @@ def get_dbstats_html():
     stathtml = stathtml + "</tr>"      
     
     stathtml = stathtml + "</table>"
+    
+    log.info("get_dbstats header4 %s ", stathtml)
 
     #mydatetime = datetime.datetime.strptime(mydatetimestr, '%Y-%m-%dT%H:%M:%SZ')
 
