@@ -24,3 +24,4 @@ git+https://github.com/InfluxCommunity/influxdb3-python
 git+https://github.com/influxdb/influxdb-python.git
 websockets==11.0.3
 Flask-SocketIO
+tzdata
