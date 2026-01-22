@@ -130,14 +130,14 @@
 		  </div>
 		  
 	  {% if session['aws_email'] %}
-		 <a href="https://www.helmsmart-cloud.com/aws_alerts_logout" id="login" class="persona-button">
+		 <a href="https://helmsmart-ello.herokuapp.com/aws_alerts_logout" id="login" class="persona-button">
 		<span>HelmSmart User: {{session['aws_email']}}</span></a>
 	  
 	  {% elif session['userid'] %}
-		 <a href="https://www.helmsmart-cloud.com" id="login" class="persona-button">
+		 <a href="https://helmsmart-ello.herokuapp.com" id="login" class="persona-button">
 		<span>HelmSmart Email: {{session['username']}}</span></a>
 	  {% else %}
-		<a href="https://www.helmsmart-cloud.com/aws_login" id="login" class="persona-button">
+		<a href="https://helmsmart-ello.herokuapp.com/aws_login" id="login" class="persona-button">
 		  <span>HelmSmart Guest: click to login</span></a>
 	  {% endif %}
   </center>
@@ -691,7 +691,7 @@ function handleupdateSMS(response)
 	
 	var userid  = document.getElementById("DeviceTypeID").value;
 	
-    devicedataurl = "https://www.helmsmart-cloud.com/aws_cognito_confirm_sms_number?userid=" + userid + "&smscode=" + newSMSverificationcode+ "&devicekey=" + document.getElementById("DeviceKey").value + "&smsnumber=" + encodedSMSnumber;
+    devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_cognito_confirm_sms_number?userid=" + userid + "&smscode=" + newSMSverificationcode+ "&devicekey=" + document.getElementById("DeviceKey").value + "&smsnumber=" + encodedSMSnumber;
 
 
     return $.ajax({
@@ -776,9 +776,9 @@ if (!answer) { return;}
 		
 		if (!answer) { return; }
 	}
-	//devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
 	
-    //devicedataurl = `https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=${encodedSMSnumber}`;
+    //devicedataurl = `https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=${encodedSMSnumber}`;
 
    document.getElementById("AlertSMS").value = newSMSnumber;
 		
@@ -800,7 +800,7 @@ if (!answer) { return;}
 	
 	var userid  = document.getElementById("DeviceTypeID").value;
 	
-    devicedataurl = "https://www.helmsmart-cloud.com/aws_cognito_update_sms_number?userid=" + userid +   "&devicekey=" + document.getElementById("DeviceKey").value + "&smsnumber="  + encodedSMSnumber + "&awsusername=" + gAWSUsername;
+    devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_cognito_update_sms_number?userid=" + userid +   "&devicekey=" + document.getElementById("DeviceKey").value + "&smsnumber="  + encodedSMSnumber + "&awsusername=" + gAWSUsername;
 
 
     return $.ajax({
@@ -915,7 +915,7 @@ function handleupdateAlertEmail(response)
 	
 	var userid  = document.getElementById("DeviceTypeID").value;
 	
-    devicedataurl = "https://www.helmsmart-cloud.com/aws_cognito_confirm_sms_email?userid=" + userid + "&smscode=" + newSMSverificationcode+ "&devicekey=" + document.getElementById("DeviceKey").value + "&smsemail=" + encodedSMSnumber;
+    devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_cognito_confirm_sms_email?userid=" + userid + "&smscode=" + newSMSverificationcode+ "&devicekey=" + document.getElementById("DeviceKey").value + "&smsemail=" + encodedSMSnumber;
 
 
     return $.ajax({
@@ -978,9 +978,9 @@ if (answer) {
 		
 	var encodedAlertEmail = encodeURIComponent(newAlertEmail);
 	
-	//devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
 	
-    //devicedataurl = `https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=${encodedSMSnumber}`;
+    //devicedataurl = `https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=${encodedSMSnumber}`;
 
    document.getElementById("AlertEmail").value = newAlertEmail;
 		
@@ -1002,7 +1002,7 @@ if (answer) {
 	
 	var userid  = document.getElementById("DeviceTypeID").value;
 	
-    devicedataurl = "https://www.helmsmart-cloud.com/aws_cognito_update_sms_email?userid=" + userid + "&smsemail=" + encodedAlertEmail + "&awsusername=" + gAWSUsername;
+    devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_cognito_update_sms_email?userid=" + userid + "&smsemail=" + encodedAlertEmail + "&awsusername=" + gAWSUsername;
 
 
     return $.ajax({
@@ -1318,15 +1318,15 @@ function getDeviceList(useremail)
 	
 	var encodedEmail = encodeURIComponent(useremail);
 	
-	//devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
 	
 	if( gAWSAccountType == 'admin' &&  gAWSuserid == '000000000000')
 	{
-		devicedataurl = `https://www.helmsmart-cloud.com/getalldevices`;
+		devicedataurl = `https://helmsmart-ello.herokuapp.com/getalldevices`;
 	}
 	else
 	{
-		devicedataurl = `https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=${encodedEmail}`;
+		devicedataurl = `https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=${encodedEmail}`;
 	}
 	
   
@@ -1433,10 +1433,10 @@ function AWSDeleteDevice(index)
 	
 	//var deviceID = encodeURIComponent(gDeviceID);
 	
-	//devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
-	devicedataurl = "https://www.helmsmart-cloud.com/aws_delete_device?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index] + "&awsusername=" + gAWSUsername;
-    //devicedataurl = "https://www.helmsmart-cloud.com/aws_delete_device?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index] + "&accesstokem=" + gAWSAccessToken;
-	//devicedataurl = "https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=joe@seagauge.com";
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+	devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_delete_device?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index] + "&awsusername=" + gAWSUsername;
+    //devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_delete_device?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index] + "&accesstokem=" + gAWSAccessToken;
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=joe@seagauge.com";
 
     return $.ajax({
     //async: false,
@@ -1535,10 +1535,10 @@ function AWSCancelSubscription(index)
 	
 	//var deviceID = encodeURIComponent(gDeviceID);
 	
-	//devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
 	
-    devicedataurl = "https://www.helmsmart-cloud.com/aws_cancel_subscription?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index];
-	//devicedataurl = "https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=joe@seagauge.com";
+    devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_cancel_subscription?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index];
+	//devicedataurl = "https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=joe@seagauge.com";
 
     return $.ajax({
     //async: false,
@@ -1576,7 +1576,7 @@ function LogoutDevice()
    	
 	
 	
-    const logoutUri = "https://www.helmsmart-cloud.com/aws_alerts_logout"; // e.g., 'http://localhost:3000/logout'
+    const logoutUri = "https://helmsmart-ello.herokuapp.com/aws_alerts_logout"; // e.g., 'http://localhost:3000/logout'
 
     
     window.location.href = `${gAWSDomain}/logout?client_id=${gAWSClientID}&logout_uri=${encodeURIComponent(logoutUri)}`;
@@ -1597,14 +1597,14 @@ function AWSUpdateDevice()
 	
 	
    //const clientId = '7brk233gasbns1ee67i86el2c8';
-   //const redirectUri = "https://www.helmsmart-cloud.com/aws_alerts_get_user_data"; // e.g., 'http://localhost:3000/logout'
+   //const redirectUri = "https://helmsmart-ello.herokuapp.com/aws_alerts_get_user_data"; // e.g., 'http://localhost:3000/logout'
    //const cognitoDomain = "https://us-west-2wecvqzcbs.auth.us-west-2.amazoncognito.com";
    
    	//const clientId = '1cnj67tecv5hppk2b8k2gifbi0';
-    //const logoutUri = "https://www.helmsmart-cloud.com/aws_alerts_logout"; // e.g., 'http://localhost:3000/logout'
+    //const logoutUri = "https://helmsmart-ello.herokuapp.com/aws_alerts_logout"; // e.g., 'http://localhost:3000/logout'
     //const cognitoDomain = "https://us-west-2kkr4livxs.auth.us-west-2.amazoncognito.com";
     
-    window.location.href = "https://www.helmsmart-cloud.com/aws_login"
+    window.location.href = "https://helmsmart-ello.herokuapp.com/aws_login"
 	//window.location.href = `${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&state=0&redirect_uri=${encodeURIComponent(redirectUri)}`;
 
 	//window.location.href = `${cognitoDomain}/login?response_type=code&client_id=${clientId}&state=0&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=${encodeURIComponent(redirectUri)}`;
@@ -1634,8 +1634,8 @@ var dIndex=0;
 	 
 
 
-	  //devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + myDeviceKey[dIndex]; 
-	  devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+	  //devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + myDeviceKey[dIndex]; 
+	  devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
 	  devicedataurl = devicedataurl + "&devicename=" + document.getElementById("DeviceName").value; 
 	  devicedataurl = devicedataurl + "&alertemail=" +  document.getElementById("AlertEmail").value; 
 	  devicedataurl = devicedataurl + "&alertsms=" + document.getElementById("AlertSMS").value;
@@ -1684,8 +1684,8 @@ Alert service</p>
 	SeaGaugeG4 and SeaSmartG3 devices can send data directly to HelmSmart-Cloud 
 	services using any internet connection where it is stored in real time for 
 	off-line analytics,</p>
-	<p>Stored data can be <a href="https://www.helmsmart-cloud.com/graphsmart">time series graphed </a>or <a href="https://www.helmsmart-cloud.com/mapsmart">overlayed on google maps</a>.</p>
-	<p>You can also create <a href="https://www.helmsmart-cloud.com/dashboards_list">customized real-time dashboards </a> and <a href="https://www.helmsmart-cloud.com/netgauges">virtual 
+	<p>Stored data can be <a href="https://helmsmart-ello.herokuapp.com/graphsmart">time series graphed </a>or <a href="https://helmsmart-ello.herokuapp.com/mapsmart">overlayed on google maps</a>.</p>
+	<p>You can also create <a href="https://helmsmart-ello.herokuapp.com/dashboards_list">customized real-time dashboards </a> and <a href="https://helmsmart-ello.herokuapp.com/netgauges">virtual 
 	insturmentation</a> pages.</p>
 	<p>HelmSmart-Cloud also offers a seperate real-time Alerts module which 
 	analyzes incoming sensor data with configured alert thresholds to generate 
@@ -1745,8 +1745,8 @@ Alert service</p>
 		phone numbers for receiving Alerts.</p>
 	<p>
 		To configure actual sensor alerts for each device - use the
-		<a href="https://www.helmsmart-cloud.com/alertsmart"> ALERTS</a> button on the main
-		<a href="https://www.helmsmart-cloud.com/"> HelmSmart-Cloud</a> home page</p>
+		<a href="https://helmsmart-ello.herokuapp.com/alertsmart"> ALERTS</a> button on the main
+		<a href="https://helmsmart-ello.herokuapp.com/"> HelmSmart-Cloud</a> home page</p>
 
 	<p>Yearly subscriptions are offered at a 10% discount from monthly plans</p>
 	<p>&nbsp;</p>
