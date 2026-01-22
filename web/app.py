@@ -161,6 +161,13 @@ app.config["AWS_COGNITO_USER_POOL_CLIENT_ID"] = environ.get("AWS_COGNITO_USER_PO
 app.config["AWS_COGNITO_USER_POOL_CLIENT_SECRET"] = environ.get("AWS_COGNITO_USER_POOL_CLIENT_SECRET")
 app.config["AWS_COGNITO_REDIRECT_URL"] = environ.get("AWS_COGNITO_REDIRECT_URL")
 
+from flask_cognito_lib import CognitoAuth
+from flask_cognito_lib.decorators import (
+    auth_required,
+    cognito_login,
+    cognito_login_callback,
+    cognito_logout,
+)
 from flask_awscognito import AWSCognitoAuthentication
 
 aws_auth = AWSCognitoAuthentication(app)
