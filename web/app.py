@@ -673,7 +673,8 @@ def aws_alerts_get_user_data():
 
     log.info('aws_alerts_get_user_data: exit session %s:  ', session)
     #return redirect(url_for('aws_home'))
-    return redirect(url_for('manage'))    
+    return redirect(url_for('manage'))
+    return redirect(url_for('dashboards_list'))   
 
   except cognito_client.exceptions.ResourceNotFoundException:
     log.info("aws_alerts_get_user_data: User or User Pool not found.")
