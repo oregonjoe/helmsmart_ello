@@ -340,7 +340,13 @@ def dashboards_list():
 
 
 
+@app.route('/manage')
+def manage():
 
+  return render_template(
+    'manage.html',
+    features = [],
+  )
 
 
 
