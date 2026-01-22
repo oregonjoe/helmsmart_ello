@@ -25,3 +25,7 @@ git+https://github.com/influxdb/influxdb-python.git
 websockets==11.0.3
 Flask-SocketIO
 tzdata
+boto3==1.42.13
+python-binary-memcached==0.31.2
+flask-cognito-lib
+Flask-AWSCognito
