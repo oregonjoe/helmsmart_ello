@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy</title>
+
+
+	<title>netView - HelmSmart NMEA 2000 bus data</title>
+	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="{{ url_for('static', filename='js/modernizr-2.6.2.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.unobtrusive-ajax.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery_blockUI.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.validate.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.validate.unobtrusive.js') }}"></script>
+	 <script type="text/javascript" src="{{ url_for('static', filename='js/PGNSelectFunctions.js') }}" ></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-ui-timepicker-addon.js') }}"></script> -->
+       <script type="text/javascript" src="{{ url_for('static', filename='js/jquery_blockUI.js') }}"></script>
+       <script type="text/javascript" src="{{ url_for('static', filename='js/jscolor.js') }} " ></script>
+	   
+	<!--   <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.js') }} " ></script> -->
+	   
+	   
+	   
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />  
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/fileuploadstyles.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/persona-buttons.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/helmsmart-buttons.css') }}"/> 
+		<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+
+	 
+	   <!-- <script src='https://cdn.firebase.com/v0/firebase.js'></script> -->
+	   
+	   <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+	   
+	<style>
+	
+
+	
+	td { white-space: nowrap; }
+	
+	.nowrap { white-space: nowrap; }
+	
+		.nav-tabs > li.active > a,
+		.nav-tabs > li.active > a:hover,
+		.nav-tabs > li.active > a:focus {
+			color: #fff;
+			background-color: #428bca; 
+		}
+
+		.tab-content {
+			margin-top: 15px;
+		}
+	</style>
+
+
+<style type="text/css">
+	.map_container{
+		 position: relative;
+		 width: 100%;
+		 /*padding-bottom: 56.25%;*/ /* Ratio 16:9 ( 100%/16*9 = 56.25% ) */
+	}
+	.map_container .map_canvas{
+		height:120px;
+		width:180px;
+	}
+
+	.map_container .map_edit_canvas{
+		width:100%;
+		height:280px;
+		margin-left:10px;
+		border:1px solid gray;
+	}
+
+	.ajaxBtn {
+		width:44px;
+	}
+</style>
+
+		
+
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/support.js') }}" ></script>
+
+<style>
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+	.control-label {
+		padding-right: 3px;
+	}
+
+	.timeAgo {
+		color: gray;
+	}
+
+	.valueFormat {
+		color: black;
+	}
+
+	#tabGeoFence .form-control-static,
+	#tabGeoFence .control-label {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+
+	hr {
+		margin-top: 2px;
+		margin-bottom: 6px;
+	}
+
+	input[type=checkbox] {
+		margin-left: 0px !important;
+	}
+</style>
+
+	<style>
+		.nav-tabs > li.active > a,
+		.nav-tabs > li.active > a:hover,
+		.nav-tabs > li.active > a:focus {
+			color: #fff;
+			background-color: #428bca;
+		}
+
+		.tab-content {
+			margin-top: 15px;
+		}
+	</style>
+
+<style type="text/css">
+ p.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	}
+ol
+	{margin-bottom:0in;}
+ li.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	}
+.auto-style1 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #008080;
+}
+</style>
+</head>
+
+<body>
+
+   <table cellpadding="5" cellspacing="10" style="width: 100%">
+	   <tr>
+		   <td>
+	   <div>
+	  <a width="250" href="http://www.helmsmart-cloud.com/manage" id="hshome" >
+      <span width="250"><h2 class="auto-style1">Helmsmart: Manage Devices</h2></span></a>
+	  </div>
+</td>
+	   </tr>
+	   <tr>
+		   <td>
+<p class="MsoNormal"><b>www.helmsmart-cloud.com Privacy Policy</b><o:p></o:p></p>
+<p class="MsoNormal">Type of website: Ecommerce<br />
+Effective date: 1th day of January, 2026<o:p></o:p></p>
+<p class="MsoNormal">www.helmsmart-cloud.com (the "Site") is owned and operated 
+by Chetco Digital Limited. Chetco Digital Limited can be contacted at:<br />
+<br />
+support@helmsmart-cloud.com<br />
+(541) 469-4783<br />
+1340 Winchuck River Rd, Brookings, OR 97415<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Purpose</u></b><br />
+The purpose of this privacy policy (this "Privacy Policy") is to inform users of 
+our Site of the following:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo1; tab-stops: list .5in">
+	The personal data we will collect;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo2; tab-stops: list .5in">
+	Use of collected data;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo3; tab-stops: list .5in">
+	Who has access to the data collected;<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo4; tab-stops: list .5in">
+	The rights of Site users; and<o:p></o:p></li>
+</ol>
+<ol start="5" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo5; tab-stops: list .5in">
+	The Site's cookie policy.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal">This Privacy Policy applies in addition to the terms and 
+conditions of our Site.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Consent</u></b><br />
+By using our Site users agree that they consent to:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo6; tab-stops: list .5in">
+	The conditions set out in this Privacy Policy; and<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo7; tab-stops: list .5in">
+	The collection, use, and retention of the data listed in this Privacy 
+	Policy.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal"><b><u>Personal Data We Collect</u></b><br />
+We only collect data that helps us achieve the purpose set out in this Privacy 
+Policy. We will not collect any additional data beyond the data listed below 
+without notifying you first.<o:p></o:p></p>
+<p class="MsoNormal"><u>Data Collected Automatically</u><br />
+When you visit and use our Site, we may automatically collect and store the 
+following information:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo8; tab-stops: list .5in">
+	IP address;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo9; tab-stops: list .5in">
+	Location;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo10; tab-stops: list .5in">
+	Hardware and software details;<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo11; tab-stops: list .5in">
+	Clicked links;<o:p></o:p></li>
+</ol>
+<ol start="5" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo12; tab-stops: list .5in">
+	Content viewed;<o:p></o:p></li>
+</ol>
+<ol start="6" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo13; tab-stops: list .5in">
+	Vessel Sensor Data;<o:p></o:p></li>
+</ol>
+<ol start="7" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo14; tab-stops: list .5in">
+	Vessel Position; and<o:p></o:p></li>
+</ol>
+<ol start="8" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo15; tab-stops: list .5in">
+	Vessel NMEA2000 and CAN bus data.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal"><u>Data Collected in a Non-Automatic Way</u><br />
+We may also collect the following data when you perform certain functions on our 
+Site:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l7 level1 lfo16; tab-stops: list .5in">
+	Email address;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l7 level1 lfo17; tab-stops: list .5in">
+	Phone number;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l7 level1 lfo18; tab-stops: list .5in">
+	Address; and<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l7 level1 lfo19; tab-stops: list .5in">
+	Payment information.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal">This data may be collected using the following methods:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l9 level1 lfo20; tab-stops: list .5in">
+	Creating an account;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l9 level1 lfo21; tab-stops: list .5in">
+	Paying for services; and<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l9 level1 lfo22; tab-stops: list .5in">
+	Registering sensor gateway devices.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal"><b><u>How We Use Personal Data</u></b><br />
+Data collected on our Site will only be used for the purposes specified in this 
+Privacy Policy or indicated on the relevant pages of our Site. We will not use 
+your data beyond what we disclose in this Privacy Policy.<br />
+<br />
+The data we collect automatically is used for the following purposes:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l5 level1 lfo23; tab-stops: list .5in">
+	Statistics;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l5 level1 lfo24; tab-stops: list .5in">
+	Customer Alerts;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l5 level1 lfo25; tab-stops: list .5in">
+	Customer instrumentation dashboards;<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l5 level1 lfo26; tab-stops: list .5in">
+	Remote switching; and<o:p></o:p></li>
+</ol>
+<ol start="5" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l5 level1 lfo27; tab-stops: list .5in">
+	Remote lighting controls.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal">The data we collect when the user performs certain 
+functions may be used for the following purposes:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l3 level1 lfo28; tab-stops: list .5in">
+	Validation of user accounts;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l3 level1 lfo29; tab-stops: list .5in">
+	Verification of subscription payment;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l3 level1 lfo30; tab-stops: list .5in">
+	Tracking vessel sensor data; and<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l3 level1 lfo31; tab-stops: list .5in">
+	Tracking vessel position.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal"><b><u>Who We Share Personal Data With</u></b><br />
+<u>Employees</u><br />
+We may disclose user data to any member of our organization who reasonably needs 
+access to user data to achieve the purposes set out in this Privacy Policy.<o:p></o:p></p>
+<p class="MsoNormal"><u>Other Disclosures</u><br />
+We will not sell or share your data with other third parties, except in the 
+following cases:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l4 level1 lfo32; tab-stops: list .5in">
+	If the law requires it;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l4 level1 lfo33; tab-stops: list .5in">
+	If it is required for any legal proceeding;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l4 level1 lfo34; tab-stops: list .5in">
+	To prove or protect our legal rights; and<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l4 level1 lfo35; tab-stops: list .5in">
+	To buyers or potential buyers of this company in the event that we seek to 
+	sell the company.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal">If you follow hyperlinks from our Site to another Site, 
+please note that we are not responsible for and have no control over their 
+privacy policies and practices.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>How Long We Store Personal Data</u></b><br />
+User data will be stored for 10 years.<br />
+<br />
+You will be notified if your data is kept for longer than this period.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>How We Protect Your Personal Data</u></b><br />
+In order to protect your security, we use the strongest available browser 
+encryption and store all of our data on servers in secure facilities. All data 
+is only accessible to our employees. Our employees are bound by strict 
+confidentiality agreements and a breach of this agreement would result in the 
+employee's termination.<br />
+<br />
+While we take all reasonable precautions to ensure that user data is secure and 
+that users are protected, there always remains the risk of harm. The Internet as 
+a whole can be insecure at times and therefore we are unable to guarantee the 
+security of user data beyond what is reasonably practical.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Children</u></b><br />
+We do not knowingly collect or use personal data from children under 13 years of 
+age. If we learn that we have collected personal data from a child under 13 
+years of age, the personal data will be deleted as soon as possible. If a child 
+under 13 years of age has provided us with personal data their parent or 
+guardian may contact our privacy officer.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>How to Access, Modify, Delete, or Challenge the Data 
+Collected</u></b><br />
+If you would like to know if we have collected your personal data, how we have 
+used your personal data, if we have disclosed your personal data and to who we 
+disclosed your personal data, or if you would like your data to be deleted or 
+modified in any way, please contact our privacy officer here:<br />
+<br />
+Joe L Burke<br />
+support@helmsmart-cloud.com<br />
+(541) 469-4783<br />
+1340 Winchuck River Rd<o:p></o:p></p>
+<p class="MsoNormal"><b><u>How to Opt-Out of Data Collection, Use or Disclosure</u></b><br />
+In addition to the method(s) described in the&nbsp;<i>How to Access, Modify, Delete, 
+or Challenge the Data Collected</i>&nbsp;section, we provide the following specific 
+opt-out methods for the forms of collection, use, or disclosure of your personal 
+data specified below:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l6 level1 lfo36; tab-stops: list .5in">
+	Remote storage of vessel data. You can opt-out by canceling current device 
+	subscription in the account management web page.<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l6 level1 lfo37; tab-stops: list .5in">
+	Remote storage of vessel data. You can opt-out by non-renew of subscription 
+	service.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal"><b><u>Cookie Policy</u></b><br />
+A cookie is a small file, stored on a user's hard drive by a website. Its 
+purpose is to collect data relating to the user's browsing habits. You can 
+choose to be notified each time a cookie is transmitted. You can also choose to 
+disable cookies entirely in your internet browser, but this may decrease the 
+quality of your user experience.<o:p></o:p></p>
+<p class="MsoNormal">We use the following types of cookies on our Site:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo38; tab-stops: list .5in">
+	<u>Functional cookies</u><br />
+	Functional cookies are used to remember the selections you make on our Site 
+	so that your selections are saved for your next visits;<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo39; tab-stops: list .5in">
+	<u>Analytical cookies</u><br />
+	Analytical cookies allow us to improve the design and functionality of our 
+	Site by collecting data on how you access our Site, for example data on the 
+	content you access, how long you stay on our Site, etc;<o:p></o:p></li>
+</ol>
+<ol start="3" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo40; tab-stops: list .5in">
+	<u>Device Session data</u><br />
+	Provisioning remote device connections; and<o:p></o:p></li>
+</ol>
+<ol start="4" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo41; tab-stops: list .5in">
+	<u>Dashboard preferences</u><br />
+	Retain configuration of user defined dashboards.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal"><b><u>Modifications</u></b><br />
+This Privacy Policy may be amended from time to time in order to maintain 
+compliance with the law and to reflect any changes to our data collection 
+process. When we amend this Privacy Policy we will update the "Effective Date" 
+at the top of this Privacy Policy. We recommend that our users periodically 
+review our Privacy Policy to ensure that they are notified of any updates. If 
+necessary, we may notify users by email of changes to this Privacy Policy.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Contact Information</u></b><br />
+If you have any questions, concerns or complaints, you can contact our privacy 
+officer, <span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span>Joe L Burke, at:<br />
+<br />
+support@helmsmart-cloud.com<br />
+(541) 469-4783<br />
+1340 Winchuck River Rd<o:p></o:p></p>
+		   </td>
+	   </tr>
+   </table>
+   <p class="MsoNormal">&nbsp;</p>
+
+</body>
+
+</html>

@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>TERMS AND CONDITIONS</title>
+
+	<title>netView - HelmSmart NMEA 2000 bus data</title>
+	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="{{ url_for('static', filename='js/modernizr-2.6.2.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.unobtrusive-ajax.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery_blockUI.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.validate.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.validate.unobtrusive.js') }}"></script>
+	 <script type="text/javascript" src="{{ url_for('static', filename='js/PGNSelectFunctions.js') }}" ></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-ui-timepicker-addon.js') }}"></script> -->
+       <script type="text/javascript" src="{{ url_for('static', filename='js/jquery_blockUI.js') }}"></script>
+       <script type="text/javascript" src="{{ url_for('static', filename='js/jscolor.js') }} " ></script>
+	   
+	<!--   <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.js') }} " ></script> -->
+	   
+	   
+	   
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />  
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/fileuploadstyles.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/persona-buttons.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/helmsmart-buttons.css') }}"/> 
+		<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+
+	 
+	   <!-- <script src='https://cdn.firebase.com/v0/firebase.js'></script> -->
+	   
+	   <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+	   
+	<style>
+	
+
+	
+	td { white-space: nowrap; }
+	
+	.nowrap { white-space: nowrap; }
+	
+		.nav-tabs > li.active > a,
+		.nav-tabs > li.active > a:hover,
+		.nav-tabs > li.active > a:focus {
+			color: #fff;
+			background-color: #428bca; 
+		}
+
+		.tab-content {
+			margin-top: 15px;
+		}
+	</style>
+
+
+<style type="text/css">
+	.map_container{
+		 position: relative;
+		 width: 100%;
+		 /*padding-bottom: 56.25%;*/ /* Ratio 16:9 ( 100%/16*9 = 56.25% ) */
+	}
+	.map_container .map_canvas{
+		height:120px;
+		width:180px;
+	}
+
+	.map_container .map_edit_canvas{
+		width:100%;
+		height:280px;
+		margin-left:10px;
+		border:1px solid gray;
+	}
+
+	.ajaxBtn {
+		width:44px;
+	}
+</style>
+
+		
+
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/support.js') }}" ></script>
+
+<style>
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+	.control-label {
+		padding-right: 3px;
+	}
+
+	.timeAgo {
+		color: gray;
+	}
+
+	.valueFormat {
+		color: black;
+	}
+
+	#tabGeoFence .form-control-static,
+	#tabGeoFence .control-label {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+
+	hr {
+		margin-top: 2px;
+		margin-bottom: 6px;
+	}
+
+	input[type=checkbox] {
+		margin-left: 0px !important;
+	}
+</style>
+
+	<style>
+		.nav-tabs > li.active > a,
+		.nav-tabs > li.active > a:hover,
+		.nav-tabs > li.active > a:focus {
+			color: #fff;
+			background-color: #428bca;
+		}
+
+		.tab-content {
+			margin-top: 15px;
+		}
+	</style>
+
+<style type="text/css">
+ p.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	}
+ul
+	{margin-bottom:0in;}
+ li.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:8.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	}
+ol
+	{margin-bottom:0in;}
+.auto-style1 {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #008080;
+}
+</style>
+</head>
+
+<body>
+
+   <table style="width: 100%" cellpadding="10" cellspacing="5">
+	   <tr>
+		   <td>
+<div>
+	  <a width="250" href="http://www.helmsmart-cloud.com/manage" id="hshome" >
+      <span width="250"><h2 class="auto-style1">Helmsmart: Manage Devices</h2></span></a>
+	  </div>
+		   <td>&nbsp;</td>
+	   </tr>
+	   <tr>
+		   <td>
+
+
+<p class="MsoNormal"><b><u>TERMS AND CONDITIONS</u></b><o:p></o:p></p>
+<p class="MsoNormal">These terms and conditions (the "Terms and Conditions") 
+govern the use of&nbsp;<b>www.helsmart-cloud.com</b>&nbsp;(the "Site"). This Site is owned 
+and operated by Chetco Digital Limited. This Site is an ecommerce website.<br />
+<br />
+By using this Site, you indicate that you have read and understand these Terms 
+and Conditions and agree to abide by them at all times.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Intellectual Property</u></b><br />
+All content published and made available on our Site is the property of Chetco 
+Digital Limited and the Site's creators. This includes, but is not limited to 
+images, text, logos, documents, downloadable files and anything that contributes 
+to the composition of our Site.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Acceptable Use</u></b><br />
+As a user of our Site, you agree to use our Site legally, not to use our Site 
+for illegal purposes, and not to:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo1; tab-stops: list .5in">
+	Harass or mistreat other users of our Site;<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo2; tab-stops: list .5in">
+	Violate the rights of other users of our Site;<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo3; tab-stops: list .5in">
+	Violate the intellectual property rights of the Site owners or any third 
+	party to the Site;<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo4; tab-stops: list .5in">
+	Hack into the account of another user of the Site;<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo5; tab-stops: list .5in">
+	Act in any way that could be considered fraudulent; or<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l0 level1 lfo6; tab-stops: list .5in">
+	Post any material that may be deemed inappropriate or offensive.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal">If we believe you are using our Site illegally or in a 
+manner that violates these Terms and Conditions, we reserve the right to limit, 
+suspend or terminate your access to our Site. We also reserve the right to take 
+any legal steps necessary to prevent you from accessing our Site.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>User Contributions</u></b><br />
+Users may post the following information on our Site:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo7; tab-stops: list .5in">
+	Vessel NMEA2000 or CAN bus data;<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo8; tab-stops: list .5in">
+	Vessel Sensor Date; and<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l8 level1 lfo9; tab-stops: list .5in">
+	Vessel Position Data.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal">By posting publicly on our Site, you agree not to act 
+illegally or violate these Terms and Conditions.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Accounts</u></b><br />
+When you create an account on our Site, you agree to the following:<o:p></o:p></p>
+<ol start="1" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo10; tab-stops: list .5in">
+	You are solely responsible for your account and the security and privacy of 
+	your account, including passwords or sensitive information attached to that 
+	account; and<o:p></o:p></li>
+</ol>
+<ol start="2" style="margin-top: 0in" type="1">
+	<li class="MsoNormal" style="mso-list: l2 level1 lfo11; tab-stops: list .5in">
+	All personal information you provide to us through your account is up to 
+	date, accurate, and truthful and that you will update your personal 
+	information if it changes.<o:p></o:p></li>
+</ol>
+<p class="MsoNormal">We reserve the right to suspend or terminate your account 
+if you are using our Site illegally or if you violate these Terms and 
+Conditions.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Sale of Goods And Services</u></b><br />
+These Terms and Conditions govern the sale of goods and services available on 
+our Site.<o:p></o:p></p>
+<p class="MsoNormal">The following goods are available on our Site:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l4 level1 lfo12; tab-stops: list .5in">
+	SeaGaugeG4; and<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l4 level1 lfo13; tab-stops: list .5in">
+	SeaSmartG3.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal">The following services are available on our Site:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l3 level1 lfo14; tab-stops: list .5in">
+	HelmSmart-Cloud Remote Monitoring.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal">The services will be paid for in full when the services are 
+ordered.<o:p></o:p></p>
+<p class="MsoNormal">These Terms and Conditions apply to all the goods and 
+services that are displayed on our Site at the time you access it. This includes 
+all products listed as being out of stock. All information, descriptions, or 
+images that we provide about our goods and services are as accurate as possible. 
+However, we are not legally bound by such information, descriptions, or images 
+as we cannot guarantee the accuracy of all goods and services we provide. You 
+agree to purchase goods and services from our Site at your own risk.<o:p></o:p></p>
+<p class="MsoNormal">We reserve the right to modify, reject or cancel your order 
+whenever it becomes necessary. If we cancel your order and have already 
+processed your payment, we will give you a refund equal to the amount you paid. 
+You agree that it is your responsibility to monitor your payment instrument to 
+verify receipt of any refund.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>User Goods and Services</u></b><br />
+Our Site allows users to sell goods and services. We do not assume any 
+responsibility for the goods and services users sell on our Site. We cannot 
+guarantee the quality or accuracy of any goods and services sold by users on our 
+Site. However, if we are made aware that a user is violating these Terms and 
+Conditions, we reserve the right to suspend or prohibit the user from selling 
+goods and services on our Site.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Subscriptions</u></b><br />
+Your subscription does not automatically renew. You will be notified before your 
+next payment is due and must authorize that payment in order for your 
+subscription to continue.<o:p></o:p></p>
+<p class="MsoNormal">To cancel your subscription, please follow these steps: 
+</p>
+		   <ul>
+			   <li>
+			   <p class="MsoNormal">Navigate to
+			   <a href="http://www.helmsmart-cloud.com/manage">
+			   www.helmsmart-cloud.com/manage</a></p>
+			   </li>
+			   <li>
+			   <p class="MsoNormal">Select the <strong>MODIFY</strong> button</p>
+			   </li>
+			   <li>
+			   <p class="MsoNormal">Select the <strong>CANCEL SUBSCRIPTION</strong> 
+			   button</p>
+			   </li>
+			   <li>
+			   <p class="MsoNormal">Any paid subscriptions are not refundable</p>
+			   </li>
+		   </ul>
+<p class="MsoNormal"><b><u>Payments</u></b><br />
+We accept the following payment methods on our Site:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l6 level1 lfo15; tab-stops: list .5in">
+	Credit Card.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal">When you provide us with your payment information, you 
+authorize our use of and access to the payment instrument you have chosen to 
+use. By providing us with your payment information, you authorize us to charge 
+the amount due to this payment instrument.<br />
+<br />
+If we believe your payment has violated any law or these Terms and Conditions, 
+we reserve the right to cancel or reverse your transaction.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Refunds</u></b><br />
+<u>Refunds for Goods</u><br />
+Refund requests must be made within 30 days after receipt of your goods.<o:p></o:p></p>
+<p class="MsoNormal">We accept refund requests for goods sold on our Site for 
+any of the following reasons:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l5 level1 lfo16; tab-stops: list .5in">
+	Goods are broken on reciept.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal">Refunds do not apply to the following goods:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo17; tab-stops: list .5in">
+	Subscription Services;<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo18; tab-stops: list .5in">
+	Used or Installed; and<o:p></o:p></li>
+</ul>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l1 level1 lfo19; tab-stops: list .5in">
+	Not suitable for resale.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal"><u>Refunds for Services</u><br />
+We do not provide refunds for services sold on our Site as follows:<o:p></o:p></p>
+<ul style="margin-top: 0in" type="disc">
+	<li class="MsoNormal" style="mso-list: l7 level1 lfo20; tab-stops: list .5in">
+	Cloud Services are not refundable after provisioning.<o:p></o:p></li>
+</ul>
+<p class="MsoNormal"><b><u>Consumer Protection Law</u></b><br />
+Where any consumer protection legislation in your jurisdiction applies and 
+cannot be excluded, these Terms and Conditions will not limit your legal rights 
+and remedies under that legislation. These Terms and Conditions will be read 
+subject to the mandatory provisions of that legislation. If there is a conflict 
+between these Terms and Conditions and that legislation, the mandatory 
+provisions of the legislation will apply.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Limitation of Liability</u></b><br />
+HelmSmart-Cloud and our directors, officers, agents, employees, subsidiaries, 
+and affiliates will not be liable for any actions, claims, losses, damages, 
+liabilities and expenses including legal fees from your use of the Site.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Indemnity</u></b><br />
+Except where prohibited by law, by using this Site you indemnify and hold 
+harmless HelmSmart-Cloud and our directors, officers, agents, employees, 
+subsidiaries, and affiliates from any actions, claims, losses, damages, 
+liabilities and expenses including legal fees arising out of your use of our 
+Site or your violation of these Terms and Conditions.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Applicable Law</u></b><br />
+These Terms and Conditions are governed by the laws of the State of Oregon.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Severability</u></b><br />
+If at any time any of the provisions set forth in these Terms and Conditions are 
+found to be inconsistent or invalid under applicable laws, those provisions will 
+be deemed void and will be removed from these Terms and Conditions. All other 
+provisions will not be affected by the removal and the rest of these Terms and 
+Conditions will still be considered valid.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Changes</u></b><br />
+These Terms and Conditions may be amended from time to time in order to maintain 
+compliance with the law and to reflect any changes to the way we operate our 
+Site and the way we expect users to behave on our Site. We will notify users by 
+email of changes to these Terms and Conditions or post a notice on our Site.<o:p></o:p></p>
+<p class="MsoNormal"><b><u>Contact Details</u></b><br />
+Please contact us if you have any questions or concerns. Our contact details are 
+as follows:<br />
+<br />
+(541) 469-4783<br />
+support@helmsmart-cloud.com<br />
+1340 Winchuck River Rd, Brookings, OR 97415<o:p></o:p></p>
+<p class="MsoNormal">You can also contact us through the feedback form available 
+on our Site.<o:p></o:p></p>
+<p class="MsoNormal">Effective Date: 1th day of January, 2026<o:p></o:p></p>
+		   </td>
+		   <td>&nbsp;</td>
+	   </tr>
+   </table>
+   <p class="MsoNormal">
+   <o:p></o:p></p>
+
+</body>
+
+</html>
