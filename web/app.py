@@ -4,12 +4,14 @@ from os import environ as env, path
 import pylibmc  
 import sys
 import json
-  
+from threading import Thread
+
 #import md5
+import hmac
 import hashlib
 import base64
 from operator import itemgetter
-    
+     
 
 import requests
 from requests.exceptions import HTTPError
@@ -146,6 +148,26 @@ oauth.register(
 # end of auth0 init
 
 
+import botocore
+import boto3
+from botocore.exceptions import ClientError
+
+
+app.config["AWS_DEFAULT_REGION"] = environ.get("AWS_REGION")
+app.config["AWS_REGION"] = environ.get("AWS_REGION")
+app.config["AWS_COGNITO_DOMAIN"] = environ.get("AWS_COGNITO_DOMAIN")
+app.config["AWS_COGNITO_USER_POOL_ID"] = environ.get("AWS_COGNITO_USER_POOL_ID")
+app.config["AWS_COGNITO_USER_POOL_CLIENT_ID"] = environ.get("AWS_COGNITO_USER_POOL_CLIENT_ID")
+app.config["AWS_COGNITO_USER_POOL_CLIENT_SECRET"] = environ.get("AWS_COGNITO_USER_POOL_CLIENT_SECRET")
+app.config["AWS_COGNITO_REDIRECT_URL"] = environ.get("AWS_COGNITO_REDIRECT_URL")
+
+aws_auth = AWSCognitoAuthentication(app)
+
+cognito = CognitoAuth(app)
+
+cognito_client = boto3.client('cognito-idp',  region_name="us-west-2"  )
+
+
 
 mcservers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
 mcuser = os.environ.get('MEMCACHIER_USERNAME', '')
@@ -182,6 +204,22 @@ mc = pylibmc.Client(mcservers, binary=True,
 #@app.route("/")
 #def hello_world():
 #    return "<p>Hello, Joe World 4!</p>"
+
+
+def get_secret_hash(username, client_id, client_secret):
+    """
+    Calculates the SECRET_HASH for AWS Cognito authentication.
+
+    :param username: The username of the user.
+    :param client_id: The App Client ID from the Cognito User Pool.
+    :param client_secret: The App Client Secret from the Cognito User Pool.
+    :return: The Base64-encoded SECRET_HASH.
+    """
+    msg = username + client_id
+    dig = hmac.new(client_secret.encode('utf-8'), 
+                  msg.encode('utf-8'), 
+                  hashlib.sha256).digest()
+    return base64.b64encode(dig).decode('utf-8')
 
 
 
@@ -416,6 +454,244 @@ def callback_handling():
         
     #return redirect('/dashboards_list')
     return redirect('/')
+
+
+
+@app.route('/aws_login')
+def aws_login():
+  
+  session.clear()
+
+  #return oauth_aws.oidc.authorize_redirect('https://www.helmsmart-cloud.com/aws_alerts_get_user_data')
+  #return oauth_aws.oidc.authorize_redirect('https://www.helmsmart-cloud.com/aws_alerts_get_user_data?login_hint=someone')
+  #return oauth_aws.oidc.authorize_redirect('https://www.helmsmart-cloud.com/aws_alerts_get_user_data', authorize_params={'prompt': 'login'} )
+  return redirect(aws_auth.get_sign_in_url())
+  pass
+
+@app.route('/aws_alerts_logout')
+def aws_alerts_logout():
+
+  session.pop('user', None)
+  session.clear
+
+  response = make_response(redirect(url_for('manage')))
+  #cookie_name = app.config.get('SESSION_COOKIE_NAME', 'session')
+  
+  cookie_name = 'session'
+  
+  response.delete_cookie(
+          cookie_name, 
+          path='/', # Match the original cookie path
+          httponly=True # It's good practice to keep the HttpOnly flag consistent
+      )
+
+  return response
+  #return redirect(url_for('manage')) 
+
+@app.route('/aws_alerts_get_user_data')
+def aws_alerts_get_user_data():
+  
+  log.info('aws_alerts_get_user_data: request.args %s:  ', request.args)
+  log.info('aws_alerts_get_user_data: session %s:  ', session)
+  
+  access_token = aws_auth.get_access_token(request.args)
+  log.info('aws_alerts_get_user_data: access_token %s:  ', access_token) 
+  #return jsonify({'access_token': access_token})
+  #tokens = session.json()
+  #tokens = session
+  #access_token = tokens.get("access_token")
+  #user_info = access_token.get("user_info")
+
+  #tokens = oauth_aws.oidc.authorize_access_token()
+
+  #log.info('manage_details: token %s:  ', tokens)
+
+  response = cognito_client.get_user(  AccessToken=access_token  )
+
+
+
+  log.info('aws_alerts_get_user_data: get_user %s:  ', response)
+
+  try:
+
+
+    aws_username = response.get('Username', "")
+    log.info('aws_alerts_get_user_data: aws_username %s:  ', aws_username)
+    usernames = aws_username.split(':')
+    username = usernames[0].upper()
+    log.info('aws_alerts_get_user_data: username %s:  ', username)
+
+    # Extract the email from the UserAttributes list
+    useremail = None
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'email':
+            useremail = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: useremail %s:  ', useremail)
+
+    # Extract the email from the UserAttributes list
+    aws_phone = None
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'phone_number':
+            aws_phone = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: aws_phone %s:  ', aws_phone)
+
+    # Extract the email from the UserAttributes list
+    aws_name = None
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'name':
+            aws_name = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: aws_name %s:  ', aws_name)
+
+    # Extract the email from the UserAttributes list
+    aws_email_verified = 'false'
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'email_verified':
+            aws_email_verified = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: aws_email_verified %s:  ', aws_email_verified)
+
+    # Extract the email from the UserAttributes list
+    aws_phone_verified = 'false'
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'phone_number_verified':
+            aws_phone_verified = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: phone_number_verified %s:  ', aws_phone_verified)
+    
+          
+
+    session.clear
+    
+
+    #user_info_json = json.dumps(userinfo)
+    #log.info('aws_alerts_get_admin_data: TypeError in user_info %s:  ', user_info_json)
+    
+    #session['profile'] =json.loads(user_info_json)
+    session['profile']={}
+    session['profile']['email'] = useremail
+    session['profile']['name'] = username
+    session.modified = True
+    log.info('aws_alerts_get_user_data: session user_info %s:  ', session)
+
+
+    userid=hash_string(useremail)
+    log.info("aws_alerts_get_user_data- userid %s", userid)
+    
+    deviceapikey=hash_string(userid+username+"013024")
+    log.info("aws_alerts_get_user_data - deviceapikey %s", deviceapikey)
+
+    userid=""
+    deviceapikey=""
+
+    conn = db_pool.getconn()
+    
+    try:
+      
+      query  = "select deviceapikey, userid from user_devices where useremail = %s and deviceid = %s"
+      cursor = conn.cursor()
+
+      cursor = conn.cursor()
+      cursor.execute(query, ( useremail, username))
+      i = cursor.fetchone()       
+
+      #no existing deviceapikey so add new one 
+      if cursor.rowcount== 0:
+        log.info("aws_alerts_get_user_data - no deviceapikey found for username %s", username)
+        
+      else:
+        userid=str(i[1])
+        log.info("aws_alerts_get_user_data- userid %s", userid)
+    
+        deviceapikey=str(i[0])
+        log.info("aws_alerts_get_user_data - deviceapikey %s", deviceapikey)
+
+
+    except psycopg.Error as e:
+        log.info('aws_alerts_get_user_data: SyntaxError in  update deviceid %s:  ', deviceid)
+        log.info('aws_alerts_get_user_data: SyntaxError in  update deviceid  %s:  ' % str(e))
+        return jsonify( message='aws_cancel_subscription', status='error')     
+
+    except psycopg.ProgrammingError as e:
+        log.info('aws_alerts_get_user_data: ProgrammingError in  update deviceid %s:  ', deviceid)
+        log.info('aws_alerts_get_user_data: ProgrammingError in  update deviceid  %s:  ' % str(e))
+        return jsonify( message='aws_cancel_subscription', status='error')     
+
+    except psycopg.DataError as e:
+        log.info('aws_alerts_get_user_data: DataError in  update deviceid %s:  ', deviceid)
+        log.info('aws_alerts_get_user_data: DataError in  update deviceid  %s:  ' % str(e))
+        return jsonify( message='aws_cancel_subscription', status='error')     
+      
+    except:
+      e = sys.exc_info()[0]
+      log.info('aws_alerts_get_user_data : Error db delete %s:  ' % e)
+      return jsonify( message='aws_delete_device', status='error')     
+
+    finally:
+      db_pool.putconn(conn)   
+    
+    
+    session['userid'] = userid
+    session['deviceapikey'] = deviceapikey
+
+    session['aws_username'] = aws_username
+    
+    session['username'] = useremail
+    session['aws_userid'] = username.upper()
+    session['aws_email'] = useremail
+    session['aws_phone'] = aws_phone
+    session['aws_name'] = aws_name
+    session['aws_email_verified'] = aws_email_verified
+    session['aws_phone_verified'] = aws_phone_verified
+
+    #set a session variable to show this is a admin login
+
+    if len(aws_username.split(':')) > 1:
+      session['aws_account_type'] = 'sub user'
+    else:
+      session['aws_account_type'] = 'primary user'
+    
+    session['aws_clientid'] = environ.get("AWS_COGNITO_USER_POOL_CLIENT_ID")
+    session['aws_domain'] = environ.get("AWS_COGNITO_DOMAIN")
+    session['aws_access_token'] = access_token
+
+    log.info('aws_alerts_get_user_data: exit session %s:  ', session)
+    #return redirect(url_for('aws_home'))
+    return redirect(url_for('manage'))    
+
+  except cognito_client.exceptions.ResourceNotFoundException:
+    log.info("aws_alerts_get_user_data: User or User Pool not found.")
+    return jsonify( message='aws_alerts_get_user_data', status='error')  
+
+  except cognito_client.exceptions.InvalidParameterException:
+    log.info("aws_alerts_get_user_data: InvalidParameterException")
+    e = sys.exc_info()[0]
+    log.info('aws_alerts_get_user_data: Error InvalidParameterException  %s:  ' % str(e))
+    return jsonify( message='aws_alerts_get_user_data', status='error')
+
+  except cognito_client.exceptions.FlaskAWSCognitoError:
+    log.info("aws_alerts_get_user_data: FlaskAWSCognitoError")
+    e = sys.exc_info()[0]
+    log.info('aws_alerts_get_user_data: Error FlaskAWSCognitoError  %s:  ' % str(e))
+    return jsonify( message='aws_alerts_get_user_data', status='error')  
+
+  except AttributeError as e:
+    log.info('aws_alerts_get_user_data: AttributeError Error   ' % str(e))
+    return jsonify( message='aws_alerts_get_user_data', status='error')  
+    
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_alerts_get_user_data: Error  %s:  ' % str(e))  
+    return jsonify( message='aws_alerts_get_user_data', status='error')  
+
+
 
 
 @app.route('/dashboards')
