@@ -1039,6 +1039,83 @@ if (answer) {
 }
 
 }
+function handle_get_deviceView()
+{
+      $.unblockUI();
+      }
+      });
+
+}
+
+
+function get_deviceView(index)
+{
+
+
+	gModifyIndex = index;
+	//document.getElementById("DeviceTypeID").selectedIndex = index;
+	document.getElementById("DeviceKey").value = myDeviceKey[index];
+	document.getElementById("DeviceTypeID").value = myDeviceID[index];
+	document.getElementById("DeviceName").value = myDeviceName[index];
+	document.getElementById("AlertEmail").value = myAlertEmail[index];
+	document.getElementById("AlertSMS").value = myAlertSMS[index];
+
+
+	
+	 $.blockUI({ 
+     message: '<h1>Updating Alert Event...</h1>',    
+     css: {             
+     border: 'none',             
+     padding: '15px',             
+     backgroundColor: '#000', 
+        
+     '-webkit-border-radius': '10px',             
+     '-moz-border-radius': '10px',             
+     opacity: .5,             
+     color: '#fff'         
+     } });     
+
+	 
+
+
+	  //devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + myDeviceKey[dIndex]; 
+	  devicedataurl = "https://helmsmart-ello.herokuapp.com/deviceview?deviceapikey=" + document.getElementById("DeviceKey").value; 
+
+
+
+
+      return $.ajax({
+      //async: false,
+      cache: false,
+      url: devicedataurl,
+      dataType: "json",
+      timeout: 10000,
+      statusCode: {
+      404: function() {      alert( "page not found" );    },
+      200: function() {      }
+      },
+      success: function(response) {
+      handle_get_deviceView(response)
+      },
+      complete: function() {
+      // unblock when remote call returns
+      // document.getElementById("SearchStatus").innerHTML = "Search Complete";
+      //   ShowGraphSmartChart(gindex);
+      //$.unblockUI();
+      },
+      error: function(request,status,errorThrown) {
+      //document.getElementById("SearchStatus").innerHTML = "Pref Update Error";
+
+      $.unblockUI();
+      }
+      });
+
+	
+	
+	
+
+
+}
 
 function modifyData(index)
 {
@@ -1147,7 +1224,10 @@ var table = document.getElementById("DeviceData");
 		cell0.style.textAlign = 'left';
 		cell0.style.width = '110px';
 		cell0.style.height = '25px';		
-		cell0.classList.add('auto-style7'); 		
+		cell0.classList.add('auto-style7'); 	
+		cell0.addEventListener("click", get_deviceView(index));		
+		
+		
 		
 		// Device Name
 		 var cell1 = ssrow.insertCell(1);

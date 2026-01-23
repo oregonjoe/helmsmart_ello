@@ -345,13 +345,25 @@ def dashboards_list():
     #response.headers['Cache-Control'] = 'public, max-age=0'
     #return response
 
-
-
 @app.route('/manage')
 def manage():
 
   return render_template(
     'manage.html',
+    features = [],
+  )
+
+@app.route('/deviceview')
+def deviceview():
+
+  devicekey = request.args.get('deviceapikey',"")
+
+  log.info('deviceview: devicekey %s ' , devicekey, smsemail)
+
+  session["deviceapikey"] = devicekey
+  
+  return render_template(
+    'deviceview.html',
     features = [],
   )
 
