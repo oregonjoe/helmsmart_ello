@@ -209,6 +209,13 @@ mc = pylibmc.Client(mcservers, binary=True,
 
 # Application routes for web server
 
+class DateEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if hasattr(obj, 'isoformat'):
+      return obj.isoformat()
+    else:
+      return str(obj)
+
 
 #@app.route("/")
 #def hello_world():
