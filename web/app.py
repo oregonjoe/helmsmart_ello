@@ -358,7 +358,7 @@ def deviceview():
 
   devicekey = request.args.get('deviceapikey',"")
 
-  log.info('deviceview: devicekey %s ' , devicekey, smsemail)
+  log.info('deviceview: devicekey %s ' , devicekey)
 
   session["deviceapikey"] = devicekey
   
