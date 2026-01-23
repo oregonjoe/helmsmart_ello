@@ -357,10 +357,12 @@ def manage():
 def deviceview():
 
   devicekey = request.args.get('deviceapikey',"")
+  devicename = request.args.get('devicename',"")
 
-  log.info('deviceview: devicekey %s ' , devicekey)
+  log.info('deviceview: devicekey %s devicename %s ' , devicekey, devicename)
 
   session["deviceapikey"] = devicekey
+  session["devicename"] = devicename
   
   return render_template(
     'deviceview.html',
