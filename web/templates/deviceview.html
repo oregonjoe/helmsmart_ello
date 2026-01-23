@@ -126,7 +126,7 @@
 			}
 		});
 		
-		$('.nav-tabs a[href="#tabBasicSettings"]').tab('show');
+		$('.nav-tabs a[href="#tabLive"]').tab('show');
 		//RegisterDevice();
 		//GetAlertEvents();
 		/*
@@ -372,6 +372,7 @@ $('#tab a').click(function (e) {
     {% endif %}
 	
 	
+	document.getElementById("DeviceKey").value = gDeviceKey;
 	
 	InitalizeFirebase()
 	/*
@@ -1408,19 +1409,6 @@ var mypgndata;
 		
 }
 
-function ChangedDeviceTypeID(sel)
-{
-gDeviceKey = document.getElementById("DeviceTypeID").options[sel.selectedIndex].value;
-					document.getElementById("DeviceKey").value = gDeviceKey;
-					
-					
-						//GetAlertEvents();		
-						
-						if(gDeviceKey !== "")
-					InitalizeFirebase();
-					
-}
-
 
 
 
@@ -1447,268 +1435,10 @@ function ChangedLogType(sel)
 
 
 
-function handleGetDeviceData(response)
-{
-  var index=0;
-  var active_index=0;
-
-  $.unblockUI();
-
-  document.getElementById("DeviceTypeID").options.length = 0;
-
-  response.records.forEach(function(row){
- 
-     // myDeviceIDs[index]=row[0];
-	 var dduserid = row[3];
-	 
-      document.getElementById("DeviceTypeID").options[index] = new Option(row[3] + ":" + row[5], row[3]);
-	  
-	  if (gAWSuserid != "")
-	  {
-	  
-		  if (gAWSAccountType != 'admin' )
-		  {
-				if(dduserid != gAWSuserid.toString())
-				{
-					document.getElementById("DeviceTypeID").options[index].disabled = true;
-					document.getElementById("DeviceTypeID").options[index].style.backgroundColor = "#EEEEEE";
-				}
-				
-				if(dduserid == gAWSuserid.toString())
-				{
-					active_index = index;
-				}
-		  
-		  }
-		  else if( gAWSAccountType == 'admin' &&  gAWSuserid != '000000000000')
-		  {
-				if(dduserid != gAWSuserid.toString())
-				{
-					//document.getElementById("DeviceTypeID").options[index].disabled = true;
-					document.getElementById("DeviceTypeID").options[index].style.backgroundColor = "#EEEEEE";
-				}
-				
-				if(dduserid == gAWSuserid.toString())
-				{
-					active_index = index;
-				}
-			
-		  }
-	  }
-	  
-	  
-	  
-	    index++;
-	  
-	
-
-  });
 
   
   
   
-  /*
-  if( gAWSAccountType != 'admin' )
-		{
-			//check to disable row
-			if(	myDeviceID[index].toUpperCase() != gAWSuserid.toUpperCase() )
-			{
-				ssrow.classList.add('row-disabled');
-			}
-		}
-		
-		if( gAWSAccountType == 'admin' &&  gAWSuserid != '000000000000')
-		{
-			//check to disable row
-			if(	myDeviceID[index].toUpperCase() != gAWSuserid.toUpperCase() )
-			{
-				ssrow.classList.add('row-disabled');
-			}
-		}
-  */
-  
-  
-  
-  
-
-  document.getElementById("DeviceTypeID").selectedIndex = active_index;
-  gDeviceKey = document.getElementById("DeviceTypeID").options[active_index].value;
-					document.getElementById("DeviceKey").value = gDeviceKey;
-					
-	 if(gDeviceKey !== "")
-		InitalizeFirebase();
-		
-					
-					
-					
-   /*   
-  for(i=0; i< document.getElementById("DeviceTypeID").options.length; i++)
-	    		{
-	    			myDeviceID = document.getElementById("DeviceTypeID").options[i].value;
-					document.getElementById("DeviceKey").value = myDeviceID;
-		    		//if(myDeviceID == AccountDataFolder)
-		    		//	document.getElementById("DeviceID").selectedIndex = i;
-		    	}
- */         
- //  if(index == 0)
- //    document.getElementById("SearchStatus").innerHTML = "Get Devices Error";
-  //   else
-  //    document.getElementById("SearchStatus").innerHTML = "Device List update succcessful "; 
-    
-
-    // Search DB for list of series that match deviceID
-   //  GetSeriesAttributes(document.getElementById("DeviceID").options[document.getElementById("DeviceID").selectedIndex].value); 
-    
-    // Search DB for list of Alerts that match DeviceID
-  	//		 getAlertIDsList(myuserid);
-    
-    
-}
-
-
-  
- function RegisterDevice()
-{
-
-     $.blockUI({ 
-     message: '<h1>Register Device...</h1>',
-      css: {
-      border: 'none',
-      padding: '15px',
-      backgroundColor: '#000',
-
-      '-webkit-border-radius': '10px',
-      '-moz-border-radius': '10px',
-      opacity: .5,
-      color: '#fff'
-      } });
-	  
-	  
-	  timezoneOffset = parseInt(document.getElementById("TimeZoneId").options[document.getElementById("TimeZoneId").selectedIndex].value) * 60;
-
-      var devicedataurl;
-      var myuserKey;
-
-      var publictoken = "{{publictoken}}";
-      myuserKey = "{{userKey}}";
-
-      //myDeviceKey = document.getElementById("DeviceKey").value;
-	  myDeviceKey = gDeviceKey;
-
-      myDeviceName = document.getElementById("DeviceTypeID").options[document.getElementById("DeviceTypeID").selectedIndex].value;
-     // myTextArray = myDeviceName.split(":");
-
-      // devicedataurl = "http://www.boatlogger.com/Account/ActivateDevice?deviceId=a5069b96637473d7701fa11eb9baad3d&deviceType=SeaSmart_lite" ;
-
-
-      devicedataurl = "https://www.helmsmart-cloud.com/boatlogger_regtracker?publickey=" + publictoken  + '&userkey=' + myuserKey + '&deviceid=' + myDeviceKey + '&devicename=' + myDeviceName ;
-
-
-      // devicedataurl =  devicedataurl  + "&blwskey=" + document.getElementById("BLWSKeyInput").value ;
-   // devicedataurl =  devicedataurl  + "&datapaneid=" + myuserKey ;
-
-
-      return $.ajax({
-      //async: false,
-      cache: false,
-      crossDomain: true,
-      processData: false,
-      type: "GET",
-      url: devicedataurl,
-      dataType: "json",
-      timeout: 10000,
-      xhrFields: {
-      withCredentials: true
-      },
-
-      statusCode: {
-      404: function() {      alert( "page not found" );    },
-      200: function() {      }
-      },
-      success: function(response) {
-      handleRegisterDevice(response)
-      },
-      complete: function(response) {
-      // unblock when remote call returns
-     // handleRegisterDevice(response)
-      },
-      error: function(request,status,errorThrown) {
-      //document.getElementById("SearchStatus").innerHTML = "Pref Add Error";
-
-      $.unblockUI();
-      }
-      });
-
-
-} 
-
-  
-  
-  
-function getDeviceList(useremail)
-{
-
-        $.blockUI({ 
-     message: '<h1>Search in progress...</h1>',    
-     css: {             
-     border: 'none',             
-     padding: '15px',             
-     backgroundColor: '#000', 
-        
-     '-webkit-border-radius': '10px',             
-     '-moz-border-radius': '10px',             
-     opacity: .5,             
-     color: '#fff'         
-     } }); 
-
-	var devicedataurl;
-	
-    //devicedataurl = "https://www.helmsmart-cloud.com/getuser?gettype=devices&userid=" + userid;
-	
-	
-	var encodedEmail = encodeURIComponent(useremail);
-	
-	//devicedataurl = "https://www.helmsmart-cloud.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
-	
-	if( gAWSAccountType == 'admin' &&  gAWSuserid == '000000000000')
-	{
-		devicedataurl = `https://www.helmsmart-cloud.com/getalldevices`;
-	}
-	else
-	{
-		devicedataurl = `https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=${encodedEmail}`;
-	}	
-	
-	
-	
-
-    return $.ajax({
-    //async: false,
-    cache: false,
-    url: devicedataurl,
-    dataType: "json",
-    timeout: 10000,
-    statusCode: {
-    404: function() {      alert( "page not found" );    },
-    200: function() {      }
-    },
-    success: function(response) {
-    handleGetDeviceData(response)
-    },
-    complete: function() {
-    // unblock when remote call returns
-    // document.getElementById("SearchStatus").innerHTML = "Search Complete";
-    //   ShowGraphSmartChart(gindex);
-    //$.unblockUI();
-    },
-    error: function(request,status,errorThrown) {
-    //document.getElementById("SearchStatus").innerHTML = "Search Error";
-    $.unblockUI();
-    }
-    });
-
-
-}
 
 </script>
 
@@ -1718,14 +1448,14 @@ function getDeviceList(useremail)
 <div>
   <center>
 	  {% if session['aws_email'] %}
-		 <a href="https://www.helmsmart-cloud.com" id="login" class="persona-button">
+		 <a href="https://helmsmart-ello.herokuapp.com" id="login" class="persona-button">
 		<span>HelmSmart User: {{session['aws_email']}}</span></a>
 	  
 	  {% elif session['username'] %}
-		 <a href="https://www.helmsmart-cloud.com" id="login" class="persona-button">
+		 <a href="https://helmsmart-ello.herokuapp.com" id="login" class="persona-button">
 		<span>HelmSmart Email: {{session['username']}}</span></a>
 	  {% else %}
-		<a href="https://www.helmsmart-cloud.com" id="login" class="persona-button">
+		<a href="https://helmsmart-ello.herokuapp.com" id="login" class="persona-button">
 		  <span>HelmSmart Guest: click to login</span></a>
 	  {% endif %}
   </center>
@@ -1785,7 +1515,7 @@ function getDeviceList(useremail)
 			}
 		});
 		
-		$('.nav-tabs a[href="#tabBasicSettings"]').tab('show');
+		$('.nav-tabs a[href="#tabLive"]').tab('show');
 
 	});
 
@@ -1796,76 +1526,21 @@ function getDeviceList(useremail)
 		
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" id="tab" role="tablist">
-	<li><a href="#tabMarketing" role="tab" data-toggle="tab">Info</a></li>
+	<!--<li><a href="#tabMarketing" role="tab" data-toggle="tab">Info</a></li>-->
+	
 	<li><a href="#tabBasicSettings" role="tab" data-toggle="tab">Device</a></li>
-	<li><a href="#tabLive" role="tab" data-toggle="tab">Summary</a></li>
 
-
-		<li><a href="#tabDetails" role="tab" data-toggle="tab">Details</a></li>
+	<li><a href="#tabDetails" role="tab" data-toggle="tab">Details</a></li>
 		
+		
+	<li><a href="#tabLive" role="tab" data-toggle="tab">Summary</a></li>	
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
 
 <!-- Tab pane -->
-<div class="tab-pane" id="tabMarketing">
 
-<p id="introText">With this datapane you can monitor raw NMEA 2000 bus traffic received by your SeaSmart device.</p>
-<div id="idMarketing">
-	<img src="static/img/SSWIFIPRO200W.jpg" style="float: right; margin: 5px;" onclick="window.open('https://www.seasmart.net/marine-wireless-networking-wifipro.html', '_blank');" />
-	<p>If you have no tracker today, we strongly recommend the  <span class="SeaSmartPro">SeaSmartPro</span> tracker. The <span class="SeaSmartPro">SeaSmartPro</span> automatically sends all NMEA 2000 bus data to the HelmSmart Cloud service for remote monitoring, storage, and analysis</p>
-	<p>The <span class="SeaSmart">SeaSmartProGPRS</span> is however much more than a tracker. The standard functions include:</p>
-	<ul>
-		<li>Links to your existing NMEA 2000 network</li>
-		<li>Sends positions to your HelmSmart site</li>
-		<li>Uses you existing internet service</li>
-		<li>No need for additional data plan charges</li>
-		<li>Automatically creates logbooks and trip segments for your journeys</li>
-		<li>Monitors the battery voltage</li>
-		<li>Monitors the temperature onboard</li>
-		<li>Monitors fuel and tanks onboard</li>
-		<li>Monitors weather and wind</li>
-		<li>Tracks the yacht in case of vessel</li>
-	</ul>
-	<p>Built-in data logger to SD memory</p>
-	<ul>
-		<li>Records everything when vessel is out of range</li>
-		<li>Up to a full year of storage</li>
-		<li>Automatically syncs to HelmSmart site when internet service is found</li>
-		<li>Cloud base storage and access from the HelmSmart data server</li>
-		</ul>
-	<p>Add more vessel sensors</p>
-	<ul>		
-		<li>Install additional temperature sensors to monitor e.g. engine room temperature, sea temperature, outdoor temperature etc.</li>
-		<li>12 additional customized inputs (6 digital inputs, 2 tach, and 4 analog inputs)</li>
-	</ul>
-	<p>Everything is naturally monitored from your HelmSmart site and automatically included in your logbook or displayed on graphs or maps at your site.</p>
-	<p>Download the data sheet to learn more or order your <span class="SeaSmartPro">SeaSmartPro</span> directly here. Worldwide shipping is included in the <em>595 USD</em> price.</p>
-	<div style="margin: 15px;">
-		<button id='downloadDatasheet' type="button" class="btn btn-primary" onclick="window.open('http://www.seasmart.net/pdf/SSWiFiPro.pdf', '_blank');">Datasheet</button>
-<!--	<button id='orderNow' type="button" class="btn btn-primary" style="margin-left: 30px;" onclick="location.href=window.location.protocol + '//' + window.location.host + '/Order';return false;">Order Now</button>-->
-		<button id='orderNow' type="button" class="btn btn-primary" style="margin-left: 30px;" onclick="window.open('http://www.seasmart.net/marine-wireless-networking-wifipro.html', '_blank');">Order Now</button>
-
-	</div>
-	<p>
-		If you already have a SeaSmart and want to connect it to HelmSmart, login with your email
-	</p>
-
-
-</div>
-
-
-	
-
-	<script>
-		$(function () { $("[data-toggle='tooltip']").tooltip(); });
-	</script>
-
-
-
-
-</div>
 
 	<!-- Tab pane -->
 <div class="tab-pane" id="tabLive">
@@ -1981,6 +1656,7 @@ function getDeviceList(useremail)
     <p id="introText">token = {{ publictoken }} </p>
 -->
 
+<!--
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="DeviceTypeID">Device Type</label>
 			<div class="col-sm-4">
@@ -1991,9 +1667,11 @@ function getDeviceList(useremail)
 				<span class="field-validation-valid text-danger" data-valmsg-for="TrackerTypeID" data-valmsg-replace="true"></span>
 			</div>
 		</div>
+	-->	
+		
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="DeviceKey">Device Key</label>
+			<label class="control-label col-sm-2" for="DeviceKey">Device ID</label>
 			<div class="col-sm-4">
 				<input class="form-control text-box single-line" data-val="true" data-val-length="The Device Key must be a string with a length of 32 ." data-val-length-max="15" data-val-length-min="32" data-val-required="The Device Key field is required." id="DeviceKey" name="DeviceKey" placeholder="Key is 32 characters" type="text" value="" onchange="ChangedDeviceKey();" readonly />
 				<span class="field-validation-valid text-danger" data-valmsg-for="DeviceKey" data-valmsg-replace="true"></span>
