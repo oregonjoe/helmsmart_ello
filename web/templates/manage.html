@@ -1058,8 +1058,11 @@ function get_deviceView(index)
 	document.getElementById("AlertEmail").value = myAlertEmail[index];
 	document.getElementById("AlertSMS").value = myAlertSMS[index];
 
+	 devicedataurl = "https://helmsmart-ello.herokuapp.com/deviceview?deviceapikey=" + document.getElementById("DeviceKey").value; 
 
+	 window.location.href = devicedataurl
 	
+	/*
 	 $.blockUI({ 
      message: '<h1>Updating Alert Event...</h1>',    
      css: {             
@@ -1108,7 +1111,7 @@ function get_deviceView(index)
       }
       });
 
-	
+	*/
 	
 	
 
