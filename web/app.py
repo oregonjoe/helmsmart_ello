@@ -751,7 +751,7 @@ def aws_check_user_exists(username):
     return False
 
 
-
+ 
 
 def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subscriptionKey, transactionID, devicestatus, email_verified, phone_verified ):
 
