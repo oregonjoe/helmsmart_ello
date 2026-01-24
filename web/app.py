@@ -1386,6 +1386,8 @@ def aws_alerts_get_user_data():
     session['aws_domain'] = environ.get("AWS_COGNITO_DOMAIN")
     session['aws_access_token'] = access_token
 
+    session.modified = True
+
     log.info('aws_alerts_get_user_data: exit session %s:  ', session)
     #return redirect(url_for('aws_home'))
     return redirect(url_for('manage'))    
