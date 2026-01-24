@@ -770,26 +770,44 @@ def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subsc
   log.info('aws_update_device: phone_verified %s   ', phone_verified)
 
   
-  starttime = datetime.datetime.now()
-  #startepoch =  int(time.time())
+  try:
+    
+    starttime = datetime.datetime.now()
+    #startepoch =  int(time.time())
 
-  if subscriptionKey == environ.get("SubscriptionKeyMonth"):
-    endtime = datetime.datetime.now()  + relativedelta(months=1)
-    SubscriptionType = "HS-Monthly"
-  elif subscriptionKey == environ.get("SubscriptionKeyYear"):
-    SubscriptionType = "HS-Yearly"
-    endtime = datetime.datetime.now()  + relativedelta(months=12)
-  elif subscriptionKey == environ.get("SubscriptionKeyELLOYear"):
-    SubscriptionType = "HSELLO-Year"
-    endtime = datetime.datetime.now()  + relativedelta(months=12)
-  elif subscriptionKey == environ.get("SubscriptionKeyWeekly"):
-    SubscriptionType = "HS-Weekly"
-    endtime = datetime.datetime.now()  + relativedelta(weeks=1)
-  else:
-    SubscriptionType = "HS-Invalid"
-    endtime = starttime
+    if subscriptionKey == environ.get("SubscriptionKeyMonth"):
+      endtime = datetime.datetime.now()  + relativedelta(months=1)
+      SubscriptionType = "HS-Monthly"
+    elif subscriptionKey == environ.get("SubscriptionKeyYear"):
+      SubscriptionType = "HS-Yearly"
+      endtime = datetime.datetime.now()  + relativedelta(months=12)
+    elif subscriptionKey == environ.get("SubscriptionKeyELLOYear"):
+      SubscriptionType = "HSELLO-Year"
+      endtime = datetime.datetime.now()  + relativedelta(months=12)
+    elif subscriptionKey == environ.get("SubscriptionKeyWeekly"):
+      SubscriptionType = "HS-Weekly"
+      endtime = datetime.datetime.now()  + relativedelta(weeks=1)
+    else:
+      SubscriptionType = "HS-Invalid"
+      endtime = starttime
 
-  log.info("aws_update_device - starttime %s endtime %s", starttime, endtime)
+    log.info("aws_update_device - starttime %s endtime %s", starttime, endtime)
+
+  except TypeError as e:
+    log.info("aws_update_device Device error -:TypeError deviceid %s ", deviceid)
+    log.info('aws_update_device Device error -:TypeError  Error %s:  ' % e)
+    return False
+    
+  except NameError as e:
+    log.info("aws_update_device Device error -:NameError deviceid %s ", deviceid)
+    log.info('aws_update_device Device error -:NameError  Error %s:  ' % e)
+    return False
+  
+  except:
+    e = sys.exc_info()[0]
+    log.info("aws_update_device Device error - Error in update device %s", deviceid)
+    log.info('aws_update_device Device error: Error in update device %s:  ' % e)
+    return False
 
 
   userid=""
