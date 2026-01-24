@@ -43,6 +43,21 @@
 		var gUserID= "";
 		var gUseremail = ""
 		var currentUser = null;
+		
+		
+	var gAWSuserid = "000000000000"
+	var gAWSAccessToken="";
+	var gAWSDomain = "";
+	var gAWSClientID = "";
+	var gAWSUseid = "";
+	var gAWSUsername = "";
+	var gAWSPhone="";
+	var gAWSAccountType = "primary user";
+	
+	gAWSEmailVerified = "false";
+	gAWSPhoneVerified = "false";
+	
+		
 
 $(window).bind("load", function() {
 var myusername
@@ -99,6 +114,17 @@ window.location.href = '/auth0logout';
     {% endif %}
 
 
+	{% if session['deviceapikey'] %}
+		gDeviceKey = "{{session['deviceapikey']}}";
+	{% endif %}
+	
+	{% if session['aws_username'] %}
+		gAWSUsername = "{{session['aws_username']}}";
+	{% endif %}
+	
+	
+	
+	
     if (gUserID == null)
     {
     gUserID = "0";
