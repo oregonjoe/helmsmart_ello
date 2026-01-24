@@ -371,6 +371,24 @@ def deviceview():
 
 
 
+@app.route('/user_subscription_updated')
+def user_subscription_updated():
+
+  return render_template(
+    'user_subscription_updated.html',
+    features = [],
+  )
+
+@app.route('/user_subscription_added')
+def user_subscription_added():
+
+  return render_template(
+    'user_subscription_added.html',
+    features = [],
+  )
+
+
+
 @app.route('/login')
 @cross_origin()
 #@login_required
@@ -493,6 +511,9 @@ def callback_handling():
 
 
 
+
+
+
 @app.route('/aws_login')
 def aws_login():
   
@@ -523,6 +544,210 @@ def aws_alerts_logout():
 
   return response
   #return redirect(url_for('manage'))
+
+@app.route('/aws_delete_device')
+def aws_delete_device():
+
+  log.info('aws_delete_device: started')
+
+  returncode="ERROR"
+  
+  deviceapikey = request.args.get('deviceapikey',"")
+  #useremail = request.args.get('useremail', '')
+  deviceid = request.args.get('deviceid', "")
+  #devicename = request.args.get('name', '')
+
+  log.info('aws_delete_device: deviceapikey %s:   deviceid %s:', deviceapikey, deviceid)
+
+  if deviceapikey == "" or deviceid == "":
+    return jsonify( message='aws_delete_user', status='error')     
+
+
+  awsusername = request.args.get('awsusername', "")
+  log.info('aws_delete_device: awsusername %s:', awsusername)
+
+  if awsusername == "" :
+    return jsonify( message='aws_delete_user', status='error')     
+  
+  try:
+    
+    response = cognito_client.admin_delete_user(
+        UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID"),
+        Username=awsusername
+    )
+
+
+    log.info("aws_delete_device:admin_delete_user response %s:", response)
+
+    HTTPstatus = response.get("ResponseMetadata", {}).get('HTTPStatusCode')
+    log.info("aws_delete_device:admin_delete_user HTTPstatus %s:", HTTPstatus)
+
+    if HTTPstatus != 200:
+      return jsonify( message='aws_delete_user admin_delete_user', status='error') 
+
+  except cognito_client.exceptions.ResourceNotFoundException:
+    log.info("aws_delete_device: User or User Pool not found.")
+    return jsonify( message='aws_delete_user', status='error')  
+
+  except cognito_client.exceptions.InvalidParameterException:
+    log.info("aws_delete_device: InvalidParameterException")
+    e = sys.exc_info()[0]
+    log.info('manage_details: Error InvalidParameterException in getting verify code %s:  ' % str(e))
+    return jsonify( message='aws_delete_user', status='error')  
+
+  except AttributeError as e:
+    log.info('aws_delete_device: AttributeError Error in getting verify code  ' % str(e))
+    return jsonify( message='aws_delete_user', status='error')  
+    
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_delete_device: Error in verify in getting verify code %s:  ' % str(e))  
+    return jsonify( message='aws_delete_user', status='error')  
+
+    log.info("aws_delete_device: AWS user deleted")
+
+
+
+  conn = db_pool.getconn()
+ 
+  query  = "delete from user_devices where deviceapikey = %s AND deviceid = %s  "
+  
+  try:
+    # add new device record to DB
+    cursor = conn.cursor()
+    cursor.execute(query, (deviceapikey, deviceid))
+
+    conn.commit()
+    #i = cursor.fetchone()
+    # if not then just exit
+    #if cursor.rowcount == 0:
+      
+    if cursor.rowcount == 0:
+          return jsonify( message='aws_delete_device Could not delete device', status='error')      
+    else:
+          return jsonify( message='aws_delete_device deleted', status='success') 
+  
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_delete_user : Error db delete %s:  ' % e)
+    return jsonify( message='aws_delete_device', status='error')     
+
+  finally:
+    db_pool.putconn(conn)   
+
+  return jsonify( message='aws_delete_device', status='error')     
+
+@app.route('/aws_cancel_subscription')
+def aws_cancel_subscription():
+
+  log.info('aws_cancel_subscription: started')
+
+  returncode="ERROR"
+  
+  deviceapikey = request.args.get('deviceapikey',"")
+  #useremail = request.args.get('useremail', '')
+  deviceid = request.args.get('deviceid', "")
+  #devicename = request.args.get('name', '')
+
+  log.info('aws_cancel_subscription: deviceapikey %s:   deviceid %s:', deviceapikey, deviceid)
+
+  if deviceapikey == "" or deviceid == "":
+    return jsonify( message='aws_cancel_subscription', status='error')     
+
+
+  conn = db_pool.getconn()
+
+  query  = "update user_devices SET "
+  query  = query + "subscriptionid = %s, "
+  query  = query + "subscriptionenddate = %s "
+  query  = query + "WHERE deviceapikey =  %s"
+
+  log.info("aws_cancel_subscription update query %s ", query)
+  
+  try:
+    # add new device record to DB
+    cursor = conn.cursor()
+    cursor.execute(query, ('HS-Cancled', '2026-01-01', deviceapikey, ))
+
+    conn.commit()
+    #i = cursor.fetchone()
+    # if not then just exit
+    #if cursor.rowcount == 0:
+      
+    if cursor.rowcount == 0:
+          return jsonify( message='aws_cancel_subscription Could not delete device', status='error')      
+    else:
+          return jsonify( message='aws_cancel_subscription cancled', status='success')
+        
+  except psycopg.Error as e:
+      log.info('aws_update_device: SyntaxError in  update deviceid %s:  ', deviceid)
+      log.info('aws_update_device: SyntaxError in  update deviceid  %s:  ' % str(e))
+      return jsonify( message='aws_cancel_subscription', status='error')     
+
+  except psycopg.ProgrammingError as e:
+      log.info('aws_update_device: ProgrammingError in  update deviceid %s:  ', deviceid)
+      log.info('aws_update_device: ProgrammingError in  update deviceid  %s:  ' % str(e))
+      return jsonify( message='aws_cancel_subscription', status='error')     
+
+  except psycopg.DataError as e:
+      log.info('aws_update_device: DataError in  update deviceid %s:  ', deviceid)
+      log.info('aws_update_device: DataError in  update deviceid  %s:  ' % str(e))
+      return jsonify( message='aws_cancel_subscription', status='error')     
+    
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_cancel_subscription : Error db delete %s:  ' % e)
+    return jsonify( message='aws_delete_device', status='error')     
+
+  finally:
+    db_pool.putconn(conn)   
+
+  return jsonify( message='aws_cancel_subscription', status='error')
+
+
+def aws_check_user_exists(username):
+
+  log.info('aws_check_user_exists:start  ')
+  
+  UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID")
+  
+  log.info('aws_check_user_exists   UserPoolId %s: username %s:  ' , UserPoolId, username)
+
+  
+  try:
+    
+    cognito_client.admin_get_user(
+          UserPoolId=UserPoolId,
+          Username=username
+      )
+
+    log.info('aws_check_user_exists  - user already exist')      
+    return True
+
+    
+  except cognito_client.exceptions.ResourceNotFoundException:
+    log.info('aws_check_user_exists  - user dosnt exist')
+    return False
+
+  except cognito_client.exceptions.UserNotFoundException:
+    log.info('aws_check_user_exists  - UserNotFoundException')
+    return False  
+
+  except cognito_client.exceptions.UsernameExistsException:
+    log.info("aws_check_user_exists: UsernameExistsException")
+    return True
+  
+  except ClientError as e:
+    log.info('aws_check_user_exists error:  %s:  ' % e)
+    return False
+
+  except:
+    e = sys.exc_info()[0]
+    log.info("aws_check_user_exists Error in checking username %s", username)
+    log.info('aws_check_user_exists Error in checking username %s:  ' % e)
+    return False
+
+
 
 
 def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subscriptionKey, transactionID, devicestatus, email_verified, phone_verified ):
@@ -691,8 +916,341 @@ def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subsc
   finally:
     db_pool.putconn(conn)
 
+@app.route('/auth_payment_completed' , methods=['GET','POST'])
+def auth_payment_completed():
+
+  log.info('auth_payment_completed:start  ')
+
+  device_alreay_exists = False
+  
+  try:  
+    dataList=list(request.form)
+    log.info('auth_payment_completed:dataList %s  ' , dataList)
 
 
+    data_dict = request.form.to_dict(flat=True)
+    log.info("auth_payment_completed data_dict %s",data_dict)
+
+    #mPayment = json.loads(request.form)
+    #log.info("auth_payment_completed mPayment %s",mPayment)
+    #mPaymentDeviceID = data_dict['x_invoice_num']
+    mPaymentResponseCode = data_dict.get('x_response_code', "")
+
+    if mPaymentResponseCode == "":
+      return jsonify( message='Add user auth_payment_completed error - x_response_code failed'  )
+
+    log.info('auth_payment_completed:mPaymentResponseCode %s  ' , mPaymentResponseCode)
+
+    if mPaymentResponseCode != "1":
+      mPaymentReasonCode = data_dict.get('x_response_reason_code', "")
+      
+      if mPaymentReasonCode == '44':
+        return jsonify( message='Add User Error - payment declined - invalid CVC code ' )
+      
+      mPaymentReasonText = data_dict.get('x_response_reason_text', "")
+      return jsonify( message='Add User Error - payment declined',  code =mPaymentReasonCode, reason = mPaymentReasonText )
+
+    
+    mPaymentDeviceID = data_dict.get('x_invoice_num', "")
+
+    if mPaymentDeviceID == "":
+      return jsonify( message='Add user auth_payment_completed error - x_invoice_num failed' )
+
+    log.info('auth_payment_completed:mPaymentDeviceID %s  ' , mPaymentDeviceID)
+
+
+    mPaymentEmail = data_dict.get('x_email', "")
+
+    if mPaymentEmail == "":
+      return jsonify( message='Add user auth_payment_completed error - x_email failed'  )
+
+    log.info('auth_payment_completed:mPaymentEmail %s  ' , mPaymentEmail)
+
+    mPaymentPhone = data_dict.get('x_phone', "")
+
+    if mPaymentPhone != "":
+      mPaymentPhone = '+' + mPaymentPhone
+
+    log.info('auth_payment_completed:mPaymentPhone %s  ' , mPaymentPhone)
+
+
+
+    mPaymentDeviceName = data_dict.get('x_description', "")
+
+    if mPaymentDeviceName == "":
+      return jsonify( message='Add user auth_payment_completed error - x_description failed'  )
+
+    log.info('auth_payment_completed:mPaymentDeviceName %s  ' , mPaymentDeviceName)
+
+    mPaymentSubscription = data_dict.get('x_catalog_link_id', "")
+
+    if mPaymentSubscription == "":
+      return jsonify( message='Add user auth_payment_completed error - x_catalog_link_id failed'  )
+
+    log.info('auth_payment_completed:mPaymentSubscription %s  ' , mPaymentSubscription)
+
+    mPaymentTransaction = data_dict.get('x_trans_id', "")
+
+    if mPaymentTransaction == "":
+      return jsonify( message='Add user auth_payment_completed error - x_trans_id failed'  )
+
+    log.info('auth_payment_completed:mPaymentTransaction %s  ' , mPaymentTransaction)
+
+    #########################################################
+    ## check if user already exists
+    #########################################################
+    try:
+      
+      device_alreay_exists = aws_check_user_exists(mPaymentDeviceID)
+
+    except KeyError as e:
+      log.info('auth_payment_completed error  - aws_check_user_exists:KeyError  Error %s:  ' % e)
+      return jsonify( message='Add user auth_payment_completed aws Key error - failed' )
+
+    except AttributeError as e:
+      log.info('auth_payment_completed error  - aws_check_user_exists:AttributeError  Error %s:  ' % e)
+      return jsonify( message='Add user auth_payment_completed aws AttributeError error - failed' )
+
+    except TypeError as e:
+      log.info('auth_payment_completed error  - aws_check_user_exists:TypeError  Error %s:  ' % e)
+      return jsonify( message='Add user auth_payment_completed aws Type error - failed'  )
+
+    except:
+      e = sys.exc_info()[0]
+      log.info('auth_payment_completed aws error  - aws_check_user_exists: Error in adding user %s:  ' % e)
+      return jsonify( message='Add user auth_payment_completed aws error - failed'  )
+
+    #########################################################
+
+    # if does not exist then add new device
+
+    if device_alreay_exists == False:
+      
+      #########################################################
+      ## adding new device
+      #########################################################
+      log.info("auth_payment_completed: adding new device")
+      
+      try:
+        
+        response = cognito_client.admin_create_user(
+            UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID"),
+            Username=mPaymentDeviceID,
+            DesiredDeliveryMediums=['EMAIL',],
+            #DesiredDeliveryMediums=['SMS'|'EMAIL',],
+            UserAttributes=[
+                  {'Name': 'email', 'Value': mPaymentEmail},
+                  {'Name': 'phone_number', 'Value': mPaymentPhone},
+                  {'Name': 'name', 'Value': mPaymentDeviceName}
+                  #{'Name': 'email_verified', 'Value': 'true'} # Set email as verified
+              ]
+           
+        )
+   
+        errorcheck = response.get('x-amzn-ErrorType', 'noerror')
+        log.info('auth_payment_completed:errorcheck %s  ' , errorcheck)
+
+        if errorcheck != 'noerror':
+          log.info('auth_payment_completed:errorcheck %s  ' , errorcheck)
+          return jsonify( message='x-amzn-ErrorType', status=errorcheck)
+
+
+        ######### add new device to helmsmart database #############
+        #def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subscriptionKey, transactionID, devicestatus, email_verified, phone_verified ):
+        deviceupdate_check = aws_update_device(mPaymentDeviceID, mPaymentDeviceName, mPaymentEmail, mPaymentEmail, mPaymentPhone,mPaymentSubscription, mPaymentTransaction, 1, False, False   )
+
+        if deviceupdate_check == True:
+          return redirect(url_for('user_subscription_added'))
+
+        else:
+          return jsonify( message='aws_add_device error - failed'  )          
+       ###############################################
+          
+        #return jsonify( json.dumps(response) )
+        return redirect(url_for('newalertsuseradded'))  
+
+      except cognito_client.exceptions.InvalidParameterException as e:
+        log.info("auth_payment_completed - add device: InvalidParameterException")
+        #print(f"Invalid parameter: {e.response['Error']['Message']}")
+        log.info('auth_payment_completed  - add device error -InvalidParameterException  Error %s:  ' , e.response['Error']['Message'])
+        return jsonify( message='Error Invalid Parameter', status=e.response['Error']['Message'])
+
+      except cognito_client.exceptions.UsernameExistsException:
+        log.info("auth_payment_completed - add device: UsernameExistsException")
+        return jsonify( message='Username  already Exists', status='error')
+
+      except cognito_client.exceptions.UserNotFoundException:
+        log.info("auth_payment_completed - add device: UserNotFoundException")
+        return jsonify( message='Username not found', status='error')
+      
+      except KeyError as e:
+        log.info('auth_payment_completed error  - add device:KeyError  Error %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws Key error - failed' )
+
+      except AttributeError as e:
+        log.info('auth_payment_completed error  - add device:AttributeError  Error %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws AttributeError error - failed' )
+      
+      except TypeError as e:
+        log.info('auth_payment_completed error  - add device:TypeError  Error %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws Type error - failed'  )
+      
+      except:
+        e = sys.exc_info()[0]
+        log.info('auth_payment_completed aws error  - add device: Error in adding user %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws error - failed'  )
+      
+      return jsonify( json.dumps(data_dict, indent=4) )
+
+    else:
+      
+      #########################################################
+      ## updating existing device
+      #########################################################
+      log.info("auth_payment_completed: updating existing device")
+       
+      try:
+        
+        response = cognito_client.admin_update_user_attributes(
+            UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID"),
+            Username=mPaymentDeviceID,
+
+            UserAttributes=[
+                  {'Name': 'email', 'Value': mPaymentEmail},
+                  {'Name': 'phone_number', 'Value': mPaymentPhone},
+                  {'Name': 'name', 'Value': mPaymentDeviceName}
+                  #{'Name': 'email_verified', 'Value': 'true'} # Set email as verified
+              ]
+           
+        )
+   
+        errorcheck = response.get('x-amzn-ErrorType', 'noerror')
+        log.info('auth_payment_completed:errorcheck %s  ' , errorcheck)
+
+        if errorcheck != 'noerror':
+          log.info('auth_payment_completed:errorcheck %s  ' , errorcheck)
+          return jsonify( message='x-amzn-ErrorType', status=errorcheck)
+
+
+        ######### add update device to helmsmart database #############
+         #def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subscriptionKey, transactionID, devicestatus, email_verified, phone_verified ):       
+        deviceupdate_check = aws_update_device(mPaymentDeviceID, mPaymentDeviceName, mPaymentEmail, mPaymentEmail, mPaymentPhone,mPaymentSubscription, mPaymentTransaction, 1, False, False   )
+          
+        if deviceupdate_check == True:
+          return redirect(url_for('user_subscription_updated'))
+
+        else:
+          return jsonify( message='aws_update_device error - failed'  )
+        
+       ###############################################      
+
+      except cognito_client.exceptions.InvalidParameterException as e:
+        log.info("auth_payment_completed - update device: InvalidParameterException")
+        #print(f"Invalid parameter: {e.response['Error']['Message']}")
+        log.info('auth_payment_completed error -InvalidParameterException  Error %s:  ' , e.response['Error']['Message'])
+        return jsonify( message='Error Invalid Parameter', status=e.response['Error']['Message'])
+
+      except cognito_client.exceptions.UsernameExistsException:
+        log.info("auth_payment_completed - update device : UsernameExistsException")
+        return jsonify( message='Username  already Exists', status='error')
+      
+      except KeyError as e:
+        log.info('auth_payment_completed error  - update device:KeyError  Error %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws Key error - failed'  )
+
+      except ValueError as e:
+        log.info('auth_payment_completed error  - update device:ValueError  Error %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws Value error - failed'  )
+      
+      except TypeError as e:
+        log.info('auth_payment_completed error  - update device:TypeError  Error %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws Type error - failed'  )
+      
+      except:
+        e = sys.exc_info()[0]
+        log.info('aws_cognito_user_added aws error  - update device: Error in adding user %s:  ' % e)
+        return jsonify( message='Add user auth_payment_completed aws error - failed'  )
+      
+      return jsonify( json.dumps(data_dict, indent=4) )
+
+  except ValueError as e:
+    log.info('auth_payment_completed error -:ValueError  Error %s:  ' % e)
+    return jsonify( message='Add user auth_payment_completed Value error - failed' )    
+
+  except TypeError as e:
+    log.info('auth_payment_completed error -:TypeError  Error %s:  ' % e)
+    return jsonify( message='Add user auth_payment_completed Type error - failed'  )
+  
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_cognito_user_added Device error: Error in adding device %s:  ' % e)
+    return jsonify( message='Add user auth_payment_completed error - failed'  )
+
+
+@app.route('/aws_cognito_user_added')
+def aws_cognito_user_added():
+
+  log.info('aws_cognito_user_added:start  ')  
+  log.info('aws_cognito_user_added:request  %s', request)  
+
+  userphoneverified = None
+  useremailverified = None
+
+  deviceidstr = request.args.get('username', '000000000000').split(':')
+  deviceid = deviceidstr[0]
+  deviceid = deviceid.upper()
+  useremail = request.args.get('email', "")
+  useremailverified = request.args.get('emailverified', "False")
+  userphone = request.args.get('phone', "")
+  userphoneverified = request.args.get('phoneverified', "False")
+  devicename = request.args.get('device',  'SeaSmart')
+  status = 1
+
+  log.info('aws_cognito_user_added: deviceid %s  devicename %s:  ', deviceid, devicename)
+  log.info('aws_cognito_user_added: useremail %s useremailverified %s:  ', useremail, useremailverified)
+  log.info('aws_cognito_user_added: userphone %s userphoneverified %s:  ', userphone, userphoneverified)
+
+  smsemail = None
+  if useremailverified == "true":
+    smsemail = useremail
+
+  smsphone = None
+  if userphoneverified == "true":
+    smsphone = userphone
+
+  if useremail == 'undefined':
+    useremail = None
+
+  if userphone == 'undefined':
+    userphone = None
+
+  if useremailverified is None:
+    useremailverified = False
+
+
+  if userphoneverified is None:
+    userphoneverified = False
+
+  if useremailverified == 'undefined':
+    useremailverified = False
+
+  if userphoneverified == 'undefined':
+    userphoneverified = False
+    
+  log.info('aws_cognito_user_added: useremail %s useremailverified %s:  ', useremail, useremailverified)
+  log.info('aws_cognito_user_added: userphone %s userphoneverified %s:  ', userphone, userphoneverified)
+  
+  #aws_add_device(deviceid, devicename, useremail,  smsemail, smsphone )
+  #def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subscriptionKey, transactionID, devicestatus, email_verified, phone_verified ):
+  deviceupdate_check = aws_update_device(deviceid, devicename, useremail,  smsemail, smsphone, 'HS-Invalid', '0000000000', 0, useremailverified, userphoneverified )
+
+
+  if deviceupdate_check == True:
+    #return redirect(url_for('user_subscription_updated'))
+    return redirect(url_for('manage'))
+
+  else:
+    return jsonify( message='aws_update_device error - failed'  )
 
 
 
