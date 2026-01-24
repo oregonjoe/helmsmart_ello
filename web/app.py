@@ -769,7 +769,7 @@ def aws_update_device(deviceid, devicename, useremail, smsemail, smsphone, subsc
   log.info('aws_update_device: email_verified %s   ', email_verified)
   log.info('aws_update_device: phone_verified %s   ', phone_verified)
 
-  
+   
   try:
     
     starttime = datetime.datetime.now()
