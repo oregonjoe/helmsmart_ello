@@ -571,7 +571,7 @@ def aws_update_devicename():
     return jsonify( message='aws_update_devicename', status='error')     
 
 
-  awsusername = request.args.get('awsusername', "")
+  awsusername = request.args.get('deviceid', "")
   log.info('aws_update_devicename: awsusername %s:', awsusername)
 
   if awsusername == "" :
