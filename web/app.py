@@ -550,7 +550,108 @@ def aws_alerts_logout():
       )
 
   return response
-  #return redirect(url_for('manage'))
+
+
+
+
+@app.route('/aws_update_devicename')
+def aws_update_devicename():
+
+  log.info('aws_update_devicename: started')
+
+  returncode="ERROR"
+  
+  deviceapikey = request.args.get('deviceapikey',"")
+  deviceid = request.args.get('deviceid', "")
+  devicename = request.args.get('devicename', "")
+
+  log.info('aws_update_devicename: deviceapikey %s:   deviceid %s:  deviceid %s:', deviceapikey, deviceid, devicename)
+
+  if deviceapikey == "" or deviceid == "":
+    return jsonify( message='aws_update_devicename', status='error')     
+
+
+  awsusername = request.args.get('awsusername', "")
+  log.info('aws_update_devicename: awsusername %s:', awsusername)
+
+  if awsusername == "" :
+    return jsonify( message='aws_update_devicename', status='error')     
+  
+  try:
+    
+    response = cognito_client.admin_update_user_attributes(
+          UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID"),
+          Username=awsusername,
+          UserAttributes=[
+              {
+                  'Name': 'name',
+                  'Value': devicename
+              }
+          ]
+      )
+
+
+    log.info("aws_update_devicename: response %s:", response)
+
+    HTTPstatus = response.get("ResponseMetadata", {}).get('HTTPStatusCode')
+    log.info("aws_update_devicename: HTTPstatus %s:", HTTPstatus)
+
+    if HTTPstatus != 200:
+      return jsonify( message='aws_update_devicename ', status='error') 
+
+  except cognito_client.exceptions.ResourceNotFoundException:
+    log.info("aws_update_devicename: User or User Pool not found.")
+    return jsonify( message='aws_update_devicename', status='error')  
+
+  except cognito_client.exceptions.InvalidParameterException:
+    log.info("aws_update_devicename: InvalidParameterException")
+    e = sys.exc_info()[0]
+    log.info('manage_details: Error InvalidParameterException in getting verify code %s:  ' % str(e))
+    return jsonify( message='aws_update_devicename', status='error')  
+
+  except AttributeError as e:
+    log.info('aws_update_devicename: AttributeError Error in getting verify code  ' % str(e))
+    return jsonify( message='aws_update_devicename', status='error')  
+    
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_update_devicename: Error in verify in getting verify code %s:  ' % str(e))  
+    return jsonify( message='aws_update_devicename', status='error')  
+
+    log.info("aws_update_devicename: AWS Name updated")
+
+
+
+  conn = db_pool.getconn()
+ 
+
+  query  =  "update user_devices SET devicename = %s where deviceapikey = %s;
+
+  
+  try:
+    # add new device record to DB
+    cursor = conn.cursor()
+    cursor.execute(query, (devicename, deviceapikey))
+
+    conn.commit()
+    #i = cursor.fetchone()
+    # if not then just exit
+    #if cursor.rowcount == 0:
+      
+    if cursor.rowcount == 0:
+          return jsonify( message='aws_update_devicename Could not update device', status='error')      
+    else:
+          return jsonify( message='aws_update_devicename ipdated', status='success') 
+  
+  except:
+    e = sys.exc_info()[0]
+    log.info('aws_update_devicename : Error db delete %s:  ' % e)
+    return jsonify( message='aws_update_devicename', status='error')     
+
+  finally:
+    db_pool.putconn(conn)   
+
+  return jsonify( message='aws_update_devicename', status='error')
 
 @app.route('/aws_delete_device')
 def aws_delete_device():
@@ -753,6 +854,42 @@ def aws_check_user_exists(username):
     log.info("aws_check_user_exists Error in checking username %s", username)
     log.info('aws_check_user_exists Error in checking username %s:  ' % e)
     return False
+
+
+
+@app.route('/deletedevice')
+def deletedevice_endpoint():
+  
+  conn = db_pool.getconn()
+  
+  deviceapikey = request.args.get('deviceapikey', '')
+  useremail = request.args.get('useremail', '')
+  deviceid = request.args.get('deviceid', '000000000000')
+  devicename = request.args.get('name', '')
+
+
+ 
+  query  = "delete from user_devices where deviceapikey = %s AND deviceid = %s AND useremail = %s "
+  
+  try:
+    # add new device record to DB
+    cursor = conn.cursor()
+    cursor.execute(query, (deviceapikey, deviceid, useremail))
+
+    conn.commit()
+    #i = cursor.fetchone()
+    # if not then just exit
+    #if cursor.rowcount == 0:
+      
+    if cursor.rowcount == 0:
+          return jsonify( message='Could not delete device', status='error')      
+    else:
+          return jsonify( message='device deleted', status='success') 
+  
+    
+
+  finally:
+    db_pool.putconn(conn)
 
 
  
