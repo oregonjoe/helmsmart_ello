@@ -1341,6 +1341,12 @@ var table = document.getElementById("DeviceData");
 			{
 				ssrow.classList.add('row-disabled');
 			}
+			else if(	myDeviceID[index].toUpperCase() == gAWSuserid.toUpperCase() )
+			{
+						active_index = index;
+			}
+			
+
 		}
 		
 		if( gAWSAccountType == 'admin' &&  gAWSuserid != '000000000000')
@@ -1364,11 +1370,11 @@ var table = document.getElementById("DeviceData");
   
   
   
-document.getElementById("DeviceKey").value = myDeviceKey[0];
-	document.getElementById("DeviceTypeID").value = myDeviceID[0];
-     document.getElementById("DeviceName").value = myDeviceName[0];
-  document.getElementById("AlertEmail").value = myAlertEmail[0];
-   document.getElementById("AlertSMS").value = myAlertSMS[0];
+	document.getElementById("DeviceKey").value = myDeviceKey[active_index];
+	document.getElementById("DeviceTypeID").value = myDeviceID[active_index];
+    document.getElementById("DeviceName").value = myDeviceName[active_index];
+	document.getElementById("AlertEmail").value = myAlertEmail[active_index];
+	document.getElementById("AlertSMS").value = myAlertSMS[active_index];
    
    
    
