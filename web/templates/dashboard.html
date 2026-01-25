@@ -41,6 +41,73 @@ var gPrefID="";
 				"https://helmsmart-ello.herokuapp.com/static/plugins/thirdparty/highcharts.js",
 		"https://helmsmart-ello.herokuapp.com/static/plugins/thirdparty/exporting.js",
 		//"js/freeboard_plugins.min.js",             // *** Load more plugins here ***
+		
+			gEMail = "";
+	gSMSNumber="";
+	
+	var gAWSuserid = "000000000000"
+	var gAWSAccessToken="";
+	var gAWSDomain = "";
+	var gAWSClientID = "";
+	var gAWSUseid = "";
+	var gAWSUsername = "";
+	var gAWSPhone="";
+	var gAWSAccountType = "primary user";
+	
+	gAWSEmailVerified = "false";
+	gAWSPhoneVerified = "false";
+		
+		
+		    {% if session['username'] %}
+		gUserEmail = "{{session['username']}}";
+	{% endif %}
+	
+	{% if session['deviceapikey'] %}
+		gDeviceKey = "{{session['deviceapikey']}}";
+	{% endif %}
+	
+	{% if session['aws_username'] %}
+		gAWSUsername = "{{session['aws_username']}}";
+	{% endif %}
+	
+	
+	{% if session['aws_domain'] %}
+		gAWSDomain = "{{session['aws_domain']}}";
+	{% endif %}
+		
+	{% if session['aws_clientid'] %}
+		gAWSClientID = "{{session['aws_clientid']}}";
+	{% endif %}
+		
+
+    {% if session['aws_userid'] %}
+		gAWSuserid = "{{session['aws_userid']}}";
+    {% endif %}
+
+    {% if session['aws_email'] %}
+		gUserEmail = "{{session['aws_email']}}";
+    {% endif %}
+	
+	{% if session['aws_email'] %}
+		gAWSPhone = "{{session['aws_phone']}}";
+    {% endif %}
+	
+	{% if session['aws_account_type'] %}
+		gAWSAccountType = "{{session['aws_account_type']}}";
+    {% endif %}
+	
+	
+	
+	{% if session['aws_email_verified'] %}
+		gAWSEmailVerified = "{{session['aws_email_verified']}}";
+    {% endif %}
+
+    {% if session['aws_phone_verified'] %}
+		gAWSPhoneVerified = "{{session['aws_phone_verified']}}";
+    {% endif %}
+		
+		
+		
                 function(){
                     $(function()
                     { //DOM Ready
