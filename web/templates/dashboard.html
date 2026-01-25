@@ -326,7 +326,7 @@ function getDashboardJSON(prefuid)
   <center>
   {% if session['userid'] %}
      <a href="https://helmsmart-ello.herokuapp.com/dashboards_list" id="login" class="persona-button">
-    <span>HelmSmart: {{session['username']}}</span></a>
+    <span>HelmSmart: {{session['username']}} : {{session['aws_username']}}: </span></a>
   {% else %}
     <a href="https://helmsmart-ello.herokuapp.com/dashboards_list" id="login" class="persona-button">
       <span>HelmSmart: Guest</span></a>
