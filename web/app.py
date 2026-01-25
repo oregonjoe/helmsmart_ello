@@ -625,7 +625,7 @@ def aws_update_devicename():
   conn = db_pool.getconn()
  
 
-  query  =  "update user_devices SET devicename = %s where deviceapikey = %s;
+  query  =  "update user_devices SET devicename = %s where deviceapikey = %s"
 
   
   try:
