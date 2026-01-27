@@ -182,7 +182,7 @@ aws_auth = AWSCognitoAuthentication(app)
 cognito = CognitoAuth(app)
 
 cognito_client = boto3.client('cognito-idp',  region_name="us-west-2"  )
-
+email_ses_client = boto3.client('ses', aws_access_key_id=environ.get('AWS_ACCESS_KEY_ID'),  aws_secret_access_key=environ.get('AWS_SECRET_ACCESS_KEY'), region_name="us-west-2"  )
 
 
 mcservers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
@@ -18540,4 +18540,156 @@ def setdimmerapi():
 
   
   return jsonify(result="OK", dimmer=newdimmeritem)
+
+@app.route('/send_test_email')
+def sendtestemail():
+
+    #source = "joe@chetcodigital.com"
+    source = "alerts@helmsmart-cloud.com"
+    destination = "joe@seagauge.com"
+    subject = "test aws ses raw email"
+    text = "SSWIFIG2_SEADREAM ALARM Message alarmemail: /M2M/Battery/Battery Volts Port is low – mean = 14.38 threshold: 15 timestamp is:2019-02-13T20:48:00Z"
+    html = "<p>SSWIFI4G_DD30 ALARM Message alarmemail: /General/Heartbeat value is missing for Interval= 1min timestamp is:2018-10-12 18:11:09</p>"
+
+
+
+    log.info("sendtestemail_endpoint ")
+    #message_id = send_email(source, destination, subject, text, html, reply_tos=None)
+    message_id = send_raw_email(source, destination, subject, text, html, reply_tos=None)
+    
+    log.info("sendtestemail_endpoint message_id = %s", message_id)
+
+    response = make_response("success")
+    response.headers['content-type'] = "application/json"
+    return response
+
+
+
+def send_email(source, destination, subject, text, html, reply_tos=None):
+        """
+        Sends an email.
+
+        Note: If your account is in the Amazon SES  sandbox, the source and
+        destination email accounts must both be verified.
+
+        :param source: The source email account.
+        :param destination: The destination email account.
+        :param subject: The subject of the email.
+        :param text: The plain text version of the body of the email.
+        :param html: The HTML version of the body of the email.
+        :param reply_tos: Email accounts that will receive a reply if the recipient
+                          replies to the message.
+        :return: The ID of the message, assigned by Amazon SES.
+        """
+
+        message_id=""
+        
+        try:
+            #response = email_ses_client.send_email(**send_args)
+
+            response = email_ses_client.send_email(
+                Destination={
+                    'BccAddresses': [
+                    ],
+                    'CcAddresses': [
+                    ],
+                    'ToAddresses': [
+                        destination,
+                    ],
+                },
+                Message={
+                    'Body': {
+                        'Html': {
+                            'Charset': 'UTF-8',
+                            'Data': html,
+                        },
+                        'Text': {
+                            'Charset': 'UTF-8',
+                            'Data': text,
+                        },
+                    },
+                    'Subject': {
+                        'Charset': 'UTF-8',
+                        'Data': subject,
+                    },
+                },
+                Source = source,
+            )
+
+
+            
+            message_id = response["MessageId"]
+            log.info(  "Sent mail %s from %s to %s.", message_id, source, destination )
+            
+            return message_id
+          
+        #except ClientError as e:
+        except botocore.exceptions.ClientError as e:
+          log.info('send_email: ClientError  %s:  ' % str(e))
+
+        except botocore.exceptions.ParamValidationError as e:
+          log.info('send_email:ParamValidationError %s:  ' % e)
+          
+        except:
+          e = sys.exc_info()[0]
+          log.info('send_email error: ERROR %s:  ' % e)
+    
+# ######################################################
+# send test email
+# #####################################################
+def send_raw_email(source, destination, subject, text, html, reply_tos=None):
+
+        message_id=""
+
+        # The character encoding for the email.
+        email_charset = "UTF-8"
+        email_msg = MIMEMultipart('mixed')
+        # Add subject, from and to lines.
+        email_msg['Subject'] =subject
+        email_msg['From'] = source
+        email_msg['To'] = destination
+        #email_msg['Cc'] = ', '.join(email Cc list)
+        #email_msg['Bcc'] = ', '.join(email bcc list)
+        email_msg_body = MIMEMultipart('alternative')
+        textpart = MIMEText(text.encode(email_charset), 'plain', email_charset)
+        htmlpart = MIMEText(html.encode(email_charset), 'html', email_charset)
+        # Add the text and HTML parts to the child container.
+        email_msg_body.attach(textpart)
+        email_msg_body.attach(htmlpart)
+        # Attach the multipart/alternative child container to the multipart/mixed
+        # parent container.
+        email_msg.attach(email_msg_body)
+
+        
+        try:
+          #response = email_ses_client.send_email(**send_args)
+
+          response = email_ses_client.send_raw_email(
+                              Source=email_msg['From'],
+                              #Destinations= email to list + emaom cc list + email bcc list,
+                              Destinations= [],
+                              RawMessage={
+                                  'Data': email_msg.as_string(),
+                              }
+                          )
+
+            
+          message_id = response["MessageId"]
+          log.info(  "Sent raw mail %s from %s to %s.", message_id, source, destination )
+            
+          return message_id
+          
+        #except ClientError as e:
+        except botocore.exceptions.ClientError as e:
+          log.info('send_email: ClientError  %s:  ' % str(e))
+
+        except botocore.exceptions.ParamValidationError as e:
+          log.info('send_email:ParamValidationError %s:  ' % e)
+          
+        except:
+          e = sys.exc_info()[0]
+          log.info('send_email error: ERROR %s:  ' % e)
+  
+
+
 
