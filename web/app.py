@@ -35,6 +35,10 @@ from datetime import date
 
 #import pytz
 #from pytz import timezone
+import smtplib
+import email.utils
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 
