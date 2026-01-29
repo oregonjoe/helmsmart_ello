@@ -1165,7 +1165,8 @@ def auth_payment_completed():
 
     log.info('auth_payment_completed:mPaymentTransaction %s  ' , mPaymentTransaction)
 
-
+    subscriptionKey = mPaymentSubscription
+    
     if subscriptionKey == environ.get("SubscriptionKeyMonth"):
       endtime = datetime.datetime.now()  + relativedelta(months=1)
       SubscriptionType = "HS-Monthly"
