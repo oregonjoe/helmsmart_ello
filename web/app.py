@@ -1437,9 +1437,9 @@ def aws_cognito_user_added():
     #return redirect(url_for('user_subscription_updated'))
     source = "verify@helmsmart-cloud.com"
     destination = "admin@helmsmart-cloud.com"
-    subject = "New HelmSmart-ELLO user added - username:" + username
-    text = "Username = " + username + "User email = " + useremail + "DeviceID = " + deviceid + "Devicename = " + devicename
-    html = "<p>Username = " + username + "User email = " + useremail + "DeviceID = " + deviceid + "Devicename = " + devicename +"</p>"
+    subject = "New HelmSmart-ELLO user added - username:" + deviceidstr
+    text = "Username = " + deviceidstr + "User email = " + useremail + "DeviceID = " + deviceid + "Devicename = " + devicename
+    html = "<p>Username = " + deviceidstr + "User email = " + useremail + "DeviceID = " + deviceid + "Devicename = " + devicename +"</p>"
 
     log.info("sendtestemail_endpoint text = %s", text)
 
