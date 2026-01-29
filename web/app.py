@@ -1233,10 +1233,10 @@ def auth_payment_completed():
           #return redirect(url_for('user_subscription_updated'))
           source = "verify@helmsmart-cloud.com"
           destination = "admin@helmsmart-cloud.com"
-          subject = "New HelmSmart-ELLO Subscription - username:" + username
-          text = "Username = " + mPaymentDeviceID + "User email = " + mPaymentEmail + "DeviceID = " + mPaymentDeviceID + "Devicename = " + mPaymentDeviceName +"\n"
-          text =  text + "Subscription = " + mPaymentSubscription + "Transaction = " + mPaymentTransaction  +"\n"
-          html = "<p>Username = " + mPaymentDeviceID + "User email = " + mPaymentEmail + "DeviceID = " + mPaymentDeviceID + "Devicename = " + mPaymentDeviceName +"</p>"
+          subject = "New HelmSmart-ELLO Subscription - username : " + mPaymentDeviceID
+          text = "Username = " + mPaymentDeviceID + "\nUser email = " + mPaymentEmail + "\nDeviceID = " + mPaymentDeviceID + "\nDevicename = " + mPaymentDeviceName +"\n"
+          text =  text + "\nSubscription = " + mPaymentSubscription + "\nTransaction = " + mPaymentTransaction  +"\n"
+          html = "<p>Username = " + mPaymentDeviceID + "</p><p>User email = " + mPaymentEmail + "</p><p>DeviceID = " + mPaymentDeviceID + "</p><p>Devicename = " + mPaymentDeviceName +"</p>"
 
 
 
@@ -1439,7 +1439,7 @@ def aws_cognito_user_added():
     source = "verify@helmsmart-cloud.com"
     destination = "admin@helmsmart-cloud.com"
     subject = "New AWS HelmSmart-ELLO user added - username : " + username
-    text = "AWS Username = " + username + "/nUser email = " + useremail + "/nDeviceID = " + deviceid + "/nDevicename = " + devicename
+    text = "AWS Username = " + username + "\nUser email = " + useremail + "\nDeviceID = " + deviceid + "\nDevicename = " + devicename
     html = "<p>Username = " + username + "</p><p>User email = " + useremail + "</p><p>DeviceID = " + deviceid + "</p><p>Devicename = " + devicename +"</p>"
 
     log.info("sendtestemail_endpoint text = %s", text)
