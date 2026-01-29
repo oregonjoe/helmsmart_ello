@@ -1229,6 +1229,24 @@ def auth_payment_completed():
         deviceupdate_check = aws_update_device(mPaymentDeviceID, mPaymentDeviceName, mPaymentEmail, mPaymentEmail, mPaymentPhone,mPaymentSubscription, mPaymentTransaction, 1, False, False   )
 
         if deviceupdate_check == True:
+
+          #return redirect(url_for('user_subscription_updated'))
+          source = "verify@helmsmart-cloud.com"
+          destination = "admin@helmsmart-cloud.com"
+          subject = "New HelmSmart-ELLO Subscription - username:" + username
+          text = "Username = " + mPaymentDeviceID + "User email = " + mPaymentEmail + "DeviceID = " + mPaymentDeviceID + "Devicename = " + mPaymentDeviceName +"\n"
+          text =  text + "Subscription = " + mPaymentSubscription + "Transaction = " + mPaymentTransaction  +"\n"
+          html = "<p>Username = " + mPaymentDeviceID + "User email = " + mPaymentEmail + "DeviceID = " + mPaymentDeviceID + "Devicename = " + mPaymentDeviceName +"</p>"
+
+
+
+          log.info("aws_cognito_user_added sendemail")
+          #message_id = send_email(source, destination, subject, text, html, reply_tos=None)
+          message_id = send_raw_email(source, destination, subject, text, html, reply_tos=None)
+          
+          log.info("sendtestemail_endpoint message_id = %s", message_id)
+
+          
           return redirect(url_for('user_subscription_added'))
 
         else:
@@ -1415,7 +1433,22 @@ def aws_cognito_user_added():
 
 
   if deviceupdate_check == True:
+    log.info("aws_cognito_user_added to user_devices DB")
     #return redirect(url_for('user_subscription_updated'))
+    source = "verify@helmsmart-cloud.com"
+    destination = "admin@helmsmart-cloud.com"
+    subject = "New HelmSmart-ELLO user added - username:" + username
+    text = "Username = " + username + "User email = " + useremail + "DeviceID = " + deviceid + "Devicename = " + devicename
+    html = "<p>Username = " + username + "User email = " + useremail + "DeviceID = " + deviceid + "Devicename = " + devicename +"</p>"
+
+    log.info("sendtestemail_endpoint text = %s", text)
+
+    log.info("aws_cognito_user_added sendemail")
+    #message_id = send_email(source, destination, subject, text, html, reply_tos=None)
+    message_id = send_raw_email(source, destination, subject, text, html, reply_tos=None)
+    
+    log.info("sendtestemail_endpoint message_id = %s", message_id)
+    
     return redirect(url_for('manage'))
 
   else:
