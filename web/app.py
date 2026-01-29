@@ -1165,6 +1165,24 @@ def auth_payment_completed():
 
     log.info('auth_payment_completed:mPaymentTransaction %s  ' , mPaymentTransaction)
 
+
+    if subscriptionKey == environ.get("SubscriptionKeyMonth"):
+      endtime = datetime.datetime.now()  + relativedelta(months=1)
+      SubscriptionType = "HS-Monthly"
+    elif subscriptionKey == environ.get("SubscriptionKeyYear"):
+      SubscriptionType = "HS-Yearly"
+      endtime = datetime.datetime.now()  + relativedelta(months=12)
+    elif subscriptionKey == environ.get("SubscriptionKeyELLOYear"):
+      SubscriptionType = "HSELLO-Year"
+      endtime = datetime.datetime.now()  + relativedelta(months=12)
+    elif subscriptionKey == environ.get("SubscriptionKeyWeekly"):
+      SubscriptionType = "HS-Weekly"
+      endtime = datetime.datetime.now()  + relativedelta(weeks=1)
+    else:
+      SubscriptionType = "HS-Invalid"
+      endtime = starttime
+    
+
     #########################################################
     ## check if user already exists
     #########################################################
@@ -1237,7 +1255,9 @@ def auth_payment_completed():
           text = "Username = " + mPaymentDeviceID + "\nUser email = " + mPaymentEmail + "\nDeviceID = " + mPaymentDeviceID + "\nDevicename = " + mPaymentDeviceName +"\n"
           text =  text + "\nSubscription = " + mPaymentSubscription + "\nTransaction = " + mPaymentTransaction  +"\n"
           html = "<p>Username = " + mPaymentDeviceID + "</p><p>User email = " + mPaymentEmail + "</p><p>DeviceID = " + mPaymentDeviceID + "</p><p>Devicename = " + mPaymentDeviceName +"</p>"
-          html = html + "<p>Subscription = " + mPaymentSubscription + "</p><p>Transaction = " + mPaymentTransaction  +"</p>"
+          html = html + "<p>Subscription = " + mPaymentSubscription + "</p><p>SubscriptionType = " + SubscriptionType + "</p><p>Transaction = " + mPaymentTransaction  +"</p><p>SubscriptionEnd = " + endtime + "</p>
+
+
 
 
           log.info("aws_cognito_user_added sendemail")
