@@ -1237,7 +1237,7 @@ def auth_payment_completed():
           text = "Username = " + mPaymentDeviceID + "\nUser email = " + mPaymentEmail + "\nDeviceID = " + mPaymentDeviceID + "\nDevicename = " + mPaymentDeviceName +"\n"
           text =  text + "\nSubscription = " + mPaymentSubscription + "\nTransaction = " + mPaymentTransaction  +"\n"
           html = "<p>Username = " + mPaymentDeviceID + "</p><p>User email = " + mPaymentEmail + "</p><p>DeviceID = " + mPaymentDeviceID + "</p><p>Devicename = " + mPaymentDeviceName +"</p>"
-
+          html = html + "<p>Subscription = " + mPaymentSubscription + "</p><p>Transaction = " + mPaymentTransaction  +"</p>"
 
 
           log.info("aws_cognito_user_added sendemail")
