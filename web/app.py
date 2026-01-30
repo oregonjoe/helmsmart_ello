@@ -530,14 +530,6 @@ def aws_login():
   
   session.clear()
 
-  cookie_name = 'session'
-  
-  response.delete_cookie(
-          cookie_name, 
-          path='/', # Match the original cookie path
-          httponly=True # It's good practice to keep the HttpOnly flag consistent
-      )
-
 
   #return oauth_aws.oidc.authorize_redirect('https://www.helmsmart-cloud.com/aws_alerts_get_user_data')
   #return oauth_aws.oidc.authorize_redirect('https://www.helmsmart-cloud.com/aws_alerts_get_user_data?login_hint=someone')
