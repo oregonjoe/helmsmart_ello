@@ -735,9 +735,26 @@ def aws_delete_device():
     #if cursor.rowcount == 0:
       
     if cursor.rowcount == 0:
-          return jsonify( message='aws_delete_device Could not delete device', status='error')      
+      return jsonify( message='aws_delete_device Could not delete device', status='error')
+    
     else:
-          return jsonify( message='aws_delete_device deleted', status='success') 
+      log.info("aws_delete_device deleted from user_devices DB")
+      #return redirect(url_for('user_subscription_updated'))
+      source = "verify@helmsmart-cloud.com"
+      destination = "admin@helmsmart-cloud.com"
+      subject = "AWS HelmSmart-ELLO user deleted - username : " + username
+      text = "AWS Username = " + username + "\nUser email = " + useremail + "\nDeviceID = " + deviceid + "\nDevicename = " + devicename
+      html = "<p>Username = " + username + "</p><p>User email = " + useremail + "</p><p>DeviceID = " + deviceid + "</p><p>Devicename = " + devicename +"</p>"
+
+      log.info(" aws_delete_device sendtestemail_endpoint text = %s", text)
+
+      log.info("aws_delete_device sendemail")
+      #message_id = send_email(source, destination, subject, text, html, reply_tos=None)
+      message_id = send_raw_email(source, destination, subject, text, html, reply_tos=None)
+      
+      log.info("aws_delete_device sendtestemail_endpoint message_id = %s", message_id)
+      
+      return jsonify( message='aws_delete_device deleted', status='success') 
   
   except:
     e = sys.exc_info()[0]
@@ -757,9 +774,9 @@ def aws_cancel_subscription():
   returncode="ERROR"
   
   deviceapikey = request.args.get('deviceapikey',"")
-  #useremail = request.args.get('useremail', '')
+  useremail = request.args.get('useremail', '')
   deviceid = request.args.get('deviceid', "")
-  #devicename = request.args.get('name', '')
+  devicename = request.args.get('devicename', '')
 
   log.info('aws_cancel_subscription: deviceapikey %s:   deviceid %s:', deviceapikey, deviceid)
 
@@ -787,23 +804,41 @@ def aws_cancel_subscription():
     #if cursor.rowcount == 0:
       
     if cursor.rowcount == 0:
-          return jsonify( message='aws_cancel_subscription Could not delete device', status='error')      
+      return jsonify( message='aws_cancel_subscription Could not update device', status='error')
+    
     else:
-          return jsonify( message='aws_cancel_subscription cancled', status='success')
+
+      log.info("aws_cancel_subscription deleted from user_devices DB")
+      #return redirect(url_for('user_subscription_updated'))
+      source = "verify@helmsmart-cloud.com"
+      destination = "admin@helmsmart-cloud.com"
+      subject = "AWS HelmSmart-ELLO user subscription cancled - deviceid : " + deviceid
+      text = "AUser email = " + useremail + "\nDeviceID = " + deviceid + "\nDevicename = " + devicename
+      html = "<p>User email = " + useremail + "</p><p>DeviceID = " + deviceid + "</p><p>Devicename = " + devicename +"</p>"
+
+      log.info(" aws_cancel_subscription sendmail_endpoint text = %s", text)
+
+      log.info("aws_cancel_subscription sendemail")
+      #message_id = send_email(source, destination, subject, text, html, reply_tos=None)
+      message_id = send_raw_email(source, destination, subject, text, html, reply_tos=None)
+      
+      log.info("aws_cancel_subscription sendemail_endpoint message_id = %s", message_id)
+      
+      return jsonify( message='aws_cancel_subscription cancled', status='success')
         
   except psycopg.Error as e:
-      log.info('aws_update_device: SyntaxError in  update deviceid %s:  ', deviceid)
-      log.info('aws_update_device: SyntaxError in  update deviceid  %s:  ' % str(e))
+      log.info('aws_update_device: SyntaxError  deviceid %s:  ', deviceid)
+      log.info('aws_update_device: SyntaxError  deviceid  %s:  ' % str(e))
       return jsonify( message='aws_cancel_subscription', status='error')     
 
   except psycopg.ProgrammingError as e:
-      log.info('aws_update_device: ProgrammingError in  update deviceid %s:  ', deviceid)
-      log.info('aws_update_device: ProgrammingError in  update deviceid  %s:  ' % str(e))
+      log.info('aws_update_device: ProgrammingError  deviceid %s:  ', deviceid)
+      log.info('aws_update_device: ProgrammingError  deviceid  %s:  ' % str(e))
       return jsonify( message='aws_cancel_subscription', status='error')     
 
   except psycopg.DataError as e:
-      log.info('aws_update_device: DataError in  update deviceid %s:  ', deviceid)
-      log.info('aws_update_device: DataError in  update deviceid  %s:  ' % str(e))
+      log.info('aws_update_device: DataError deviceid %s:  ', deviceid)
+      log.info('aws_update_device: DataError  deviceid  %s:  ' % str(e))
       return jsonify( message='aws_cancel_subscription', status='error')     
     
   except:
