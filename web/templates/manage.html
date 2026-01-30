@@ -1616,12 +1616,14 @@ function LogoutDevice()
    	
 	
 	
-    const logoutUri = "https://helmsmart-ello.herokuapp.com/aws_alerts_logout"; // e.g., 'http://localhost:3000/logout'
+    //const logoutUri = "https://helmsmart-ello.herokuapp.com/aws_alerts_logout"; // e.g., 'http://localhost:3000/logout'
 
     
-    window.location.href = `${gAWSDomain}/logout?client_id=${gAWSClientID}&logout_uri=${encodeURIComponent(logoutUri)}`;
+    //window.location.href = `${gAWSDomain}/logout?client_id=${gAWSClientID}&logout_uri=${encodeURIComponent(logoutUri)}`;
 
 
+	window.location.href = "https://helmsmart-ello.herokuapp.com/aws_alerts_logout"; 
+	
 }
 
 function AWSUpdateDevice()
