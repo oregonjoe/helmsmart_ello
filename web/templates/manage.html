@@ -1325,11 +1325,17 @@ var table = document.getElementById("DeviceData");
 		const anchorElement = document.getElementById("login");
 
 		// 2. Set the new anchor text
-		anchorElement.textContent = "click to logout";
+		anchorElement.textContent = "<span>HelmSmart Guest: click to login</span>";
+	
+		anchorElement.href = "https://helmsmart-ello.herokuapp.com/aws_login";
+		
+		window.location.href = "https://helmsmart-ello.herokuapp.com/aws_login"; 
+
+		
 	
 		active_index = 0;
 		
-		LogoutDevice();
+		//LogoutDevice();
 	}
   
 	document.getElementById("DeviceKey").value = myDeviceKey[active_index];
