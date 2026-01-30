@@ -1062,56 +1062,7 @@ function get_deviceView(index)
 
 	 window.location.href = devicedataurl
 	
-	/*
-	 $.blockUI({ 
-     message: '<h1>Updating Alert Event...</h1>',    
-     css: {             
-     border: 'none',             
-     padding: '15px',             
-     backgroundColor: '#000', 
-        
-     '-webkit-border-radius': '10px',             
-     '-moz-border-radius': '10px',             
-     opacity: .5,             
-     color: '#fff'         
-     } });     
 
-	 
-
-
-	  //devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + myDeviceKey[dIndex]; 
-	  devicedataurl = "https://helmsmart-ello.herokuapp.com/deviceview?deviceapikey=" + document.getElementById("DeviceKey").value; 
-
-
-
-
-      return $.ajax({
-      //async: false,
-      cache: false,
-      url: devicedataurl,
-      dataType: "json",
-      timeout: 10000,
-      statusCode: {
-      404: function() {      alert( "page not found" );    },
-      200: function() {      }
-      },
-      success: function(response) {
-      handle_get_deviceView(response)
-      },
-      complete: function() {
-      // unblock when remote call returns
-      // document.getElementById("SearchStatus").innerHTML = "Search Complete";
-      //   ShowGraphSmartChart(gindex);
-      //$.unblockUI();
-      },
-      error: function(request,status,errorThrown) {
-      //document.getElementById("SearchStatus").innerHTML = "Pref Update Error";
-
-      $.unblockUI();
-      }
-      });
-
-	*/
 	
 	
 
@@ -1168,7 +1119,7 @@ function handleUpdateDevice(response)
 function handleGetDeviceData(response)
 {
   var index=0;
-    var active_index=0;
+  var active_index=0xFFFF;
 
   $.unblockUI();
 
@@ -1368,7 +1319,18 @@ var table = document.getElementById("DeviceData");
   
   //gAWSUsername
   
-  
+	if(active_index == 0xFFFF)
+	{	
+		// 1. Get the anchor element using its ID
+		const anchorElement = document.getElementById("login");
+
+		// 2. Set the new anchor text
+		anchorElement.textContent = "click to logout";
+	
+		active_index = 0;
+		
+		LogoutDevice();
+	}
   
 	document.getElementById("DeviceKey").value = myDeviceKey[active_index];
 	document.getElementById("DeviceTypeID").value = myDeviceID[active_index];
