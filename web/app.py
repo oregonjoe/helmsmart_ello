@@ -665,9 +665,9 @@ def aws_delete_device():
   returncode="ERROR"
   
   deviceapikey = request.args.get('deviceapikey',"")
-  #useremail = request.args.get('useremail', '')
+  useremail = request.args.get('useremail', '')
   deviceid = request.args.get('deviceid', "")
-  #devicename = request.args.get('name', '')
+  devicename = request.args.get('devicename', '')
 
   log.info('aws_delete_device: deviceapikey %s:   deviceid %s:', deviceapikey, deviceid)
 
@@ -742,9 +742,9 @@ def aws_delete_device():
       #return redirect(url_for('user_subscription_updated'))
       source = "verify@helmsmart-cloud.com"
       destination = "admin@helmsmart-cloud.com"
-      subject = "AWS HelmSmart-ELLO user deleted - username : " + username
-      text = "AWS Username = " + username + "\nUser email = " + useremail + "\nDeviceID = " + deviceid + "\nDevicename = " + devicename
-      html = "<p>Username = " + username + "</p><p>User email = " + useremail + "</p><p>DeviceID = " + deviceid + "</p><p>Devicename = " + devicename +"</p>"
+      subject = "AWS HelmSmart-ELLO user deleted - username : " + awsusername
+      text = "AWS Username = " + awsusername + "\nUser email = " + useremail + "\nDeviceID = " + deviceid + "\nDevicename = " + devicename
+      html = "<p>Username = " + awsusername + "</p><p>User email = " + useremail + "</p><p>DeviceID = " + deviceid + "</p><p>Devicename = " + devicename +"</p>"
 
       log.info(" aws_delete_device sendtestemail_endpoint text = %s", text)
 

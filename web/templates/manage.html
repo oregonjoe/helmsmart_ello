@@ -1514,19 +1514,13 @@ function AWSDeleteDevice(index)
 
 	var devicedataurl;
 	
-//	  document.getElementById("DeviceKey").value = myDeviceKey[index];
-//  document.getElementById("DeviceTypeID").value = myDeviceID[index];
- //document.getElementById("DeviceName").value = myDeviceName[index];
-//  document.getElementById("AlertEmail").value = myAlertEmail[index];
- //  document.getElementById("AlertSMS").value = myAlertSMS[index];
-	
-	
-	//var deviceID = encodeURIComponent(gDeviceID);
-	
-	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+
 	devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_delete_device?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index] + "&awsusername=" + gAWSUsername;
-    //devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_delete_device?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index] + "&accesstokem=" + gAWSAccessToken;
-	//devicedataurl = "https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=joe@seagauge.com";
+	devicedataurl = devicedataurl + "&devicename=" + document.getElementById("DeviceName").value; 
+	devicedataurl = devicedataurl + "&useremail=" + gUserEmail; 
+	
+	
+
 
     return $.ajax({
     //async: false,
@@ -1616,20 +1610,13 @@ function AWSCancelSubscription(index)
 
 	var devicedataurl;
 	
-//	  document.getElementById("DeviceKey").value = myDeviceKey[index];
-//  document.getElementById("DeviceTypeID").value = myDeviceID[index];
- //document.getElementById("DeviceName").value = myDeviceName[index];
-//  document.getElementById("AlertEmail").value = myAlertEmail[index];
- //  document.getElementById("AlertSMS").value = myAlertSMS[index];
-	
-	
-	//var deviceID = encodeURIComponent(gDeviceID);
-	
-	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
+
 	
     devicedataurl = "https://helmsmart-ello.herokuapp.com/aws_cancel_subscription?deviceapikey=" + myDeviceKey[index] + "&deviceid=" + myDeviceID[index];
 	devicedataurl = devicedataurl + "&devicename=" + document.getElementById("DeviceName").value; 
-
+	devicedataurl = devicedataurl + "&useremail=" + gUserEmail; 
+	
+	
 
     return $.ajax({
     //async: false,
