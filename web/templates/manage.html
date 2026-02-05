@@ -1320,7 +1320,8 @@ var table = document.getElementById("DeviceData");
 		const anchorElement = document.getElementById("login");
 
 		// 2. Set the new anchor text
-		anchorElement.textContent = "<span>HelmSmart Guest: click to login</span>";
+		//anchorElement.textContent = "<span>HelmSmart Guest: click to login</span>";
+		anchorElement.innerHTML = "<span>HelmSmart Guest: click to login</span>";
 	
 		anchorElement.href = "https://helmsmart-ello.herokuapp.com/aws_login";
 		
