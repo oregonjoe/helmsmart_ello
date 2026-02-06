@@ -1619,6 +1619,45 @@ def aws_alerts_get_user_data():
         
     log.info("aws_alerts_get_user_data - deviceapikey %s", deviceapikey)
 
+
+    # Extract the custom:helmsmartkey from the UserAttributes list
+    helmsmartkey =""
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'custom:helmsmartkey':
+            helmsmartkey = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: helmsmartkey %s:  ', helmsmartkey)
+
+    if helmsmartkey != "":
+      deviceapikey = helmsmartkey
+
+
+    # Extract the custom:deviceid_alias from the UserAttributes list
+    deviceid_alias =""
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'custom:deviceid_alias':
+            deviceid_alias = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: deviceid_alias %s:  ', deviceid_alias)
+
+    if deviceid_alias != "":
+      username =deviceid_alias
+      aws_username =deviceid_alias
+
+
+    # Extract the custom:account_type from the UserAttributes list
+    account_type ="primary user"
+    for attribute in response['UserAttributes']:
+        if attribute['Name'] == 'custom:account_type':
+            account_type = attribute['Value']
+            break
+
+    log.info('aws_alerts_get_user_data: account_type %s:  ', account_type)
+
+    
+
     session.clear
     session['profile']={}
     session['profile']['email'] = useremail
@@ -1644,7 +1683,7 @@ def aws_alerts_get_user_data():
     if len(aws_username.split(':')) > 1:
       session['aws_account_type'] = 'sub user'
     else:
-      session['aws_account_type'] = 'primary user'
+      session['aws_account_type'] = account_type
     
     session['aws_clientid'] = environ.get("AWS_COGNITO_USER_POOL_CLIENT_ID")
     session['aws_domain'] = environ.get("AWS_COGNITO_DOMAIN")
