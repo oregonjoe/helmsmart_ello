@@ -681,45 +681,52 @@ def aws_delete_device():
 
   if awsusername == "" :
     return jsonify( message='aws_delete_user', status='error')     
+
+  # ##############  delete user ###########################
+  # cant delete administrator 
+  if awsusername.upper() != "FFFFFFFFFFFF" :
+    
+    if awsusername.upper() != deviceid.upper() :
+      return jsonify( message='aws_delete_user', status='error - deviceid dosnt match aws_username')    
   
-  try:
-    
-    response = cognito_client.admin_delete_user(
-        UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID"),
-        Username=awsusername
-    )
+    try:
+      
+      response = cognito_client.admin_delete_user(
+          UserPoolId=environ.get("AWS_COGNITO_USER_POOL_ID"),
+          Username=awsusername
+      )
 
 
-    log.info("aws_delete_device:admin_delete_user response %s:", response)
+      log.info("aws_delete_device:admin_delete_user response %s:", response)
 
-    HTTPstatus = response.get("ResponseMetadata", {}).get('HTTPStatusCode')
-    log.info("aws_delete_device:admin_delete_user HTTPstatus %s:", HTTPstatus)
+      HTTPstatus = response.get("ResponseMetadata", {}).get('HTTPStatusCode')
+      log.info("aws_delete_device:admin_delete_user HTTPstatus %s:", HTTPstatus)
 
-    if HTTPstatus != 200:
-      return jsonify( message='aws_delete_user admin_delete_user', status='error') 
+      if HTTPstatus != 200:
+        return jsonify( message='aws_delete_user admin_delete_user', status='error') 
 
-  except cognito_client.exceptions.ResourceNotFoundException:
-    log.info("aws_delete_device: User or User Pool not found.")
-    return jsonify( message='aws_delete_user', status='error')  
+    except cognito_client.exceptions.ResourceNotFoundException:
+      log.info("aws_delete_device: User or User Pool not found.")
+      return jsonify( message='aws_delete_user', status='error')  
 
-  except cognito_client.exceptions.InvalidParameterException:
-    log.info("aws_delete_device: InvalidParameterException")
-    e = sys.exc_info()[0]
-    log.info('manage_details: Error InvalidParameterException in getting verify code %s:  ' % str(e))
-    return jsonify( message='aws_delete_user', status='error')  
+    except cognito_client.exceptions.InvalidParameterException:
+      log.info("aws_delete_device: InvalidParameterException")
+      e = sys.exc_info()[0]
+      log.info('manage_details: Error InvalidParameterException in getting verify code %s:  ' % str(e))
+      return jsonify( message='aws_delete_user', status='error')  
 
-  except AttributeError as e:
-    log.info('aws_delete_device: AttributeError Error in getting verify code  ' % str(e))
-    return jsonify( message='aws_delete_user', status='error')  
-    
-  except:
-    e = sys.exc_info()[0]
-    log.info('aws_delete_device: Error in verify in getting verify code %s:  ' % str(e))  
-    return jsonify( message='aws_delete_user', status='error')  
+    except AttributeError as e:
+      log.info('aws_delete_device: AttributeError Error in getting verify code  ' % str(e))
+      return jsonify( message='aws_delete_user', status='error')  
+      
+    except:
+      e = sys.exc_info()[0]
+      log.info('aws_delete_device: Error in verify in getting verify code %s:  ' % str(e))  
+      return jsonify( message='aws_delete_user', status='error')  
 
-    log.info("aws_delete_device: AWS user deleted")
+      log.info("aws_delete_device: AWS user deleted")
 
-
+  # ############## end of delete user ###########################
 
   conn = db_pool.getconn()
  
