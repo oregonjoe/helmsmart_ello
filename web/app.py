@@ -1608,7 +1608,7 @@ def aws_alerts_get_user_data():
 
     # now see if we have a matching deciveapikey
 
-    if username.upper() == "FFFFFFFFFFFF"
+    if username.upper() == "FFFFFFFFFFFF":
       deviceapikey ="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
     else:
       deviceapikey = getdeviceapikey(userid, username)
