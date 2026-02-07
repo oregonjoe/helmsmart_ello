@@ -707,7 +707,11 @@ def aws_delete_device():
 
     except cognito_client.exceptions.ResourceNotFoundException:
       log.info("aws_delete_device: User or User Pool not found.")
-      return jsonify( message='aws_delete_user', status='error')  
+      return jsonify( message='aws_delete_user', status='error')
+
+    except cognito_client.exceptions.UserNotFoundException:
+      log.info("aws_delete_device: User not found.")
+      #return jsonify( message='aws_delete_user', status='error - not found')      
 
     except cognito_client.exceptions.InvalidParameterException:
       log.info("aws_delete_device: InvalidParameterException")
@@ -724,7 +728,7 @@ def aws_delete_device():
       log.info('aws_delete_device: Error in verify in getting verify code %s:  ' % str(e))  
       return jsonify( message='aws_delete_user', status='error')  
 
-      log.info("aws_delete_device: AWS user deleted")
+    log.info("aws_delete_device: AWS user deleted")
 
   # ############## end of delete user ###########################
 
