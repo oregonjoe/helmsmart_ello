@@ -46,8 +46,17 @@
 			  background-color: #e0e0e0; /* Gray out the row for visual feedback */
 			  pointer-events: none; /* Prevents all mouse events */
 			  opacity: 0.6; /* Optional: adds a faded look */
-}
+		}
 
+
+
+		.row-selected {
+			  background-color: #AEFBEA; /* Gray out the row for visual feedback */
+			  /* pointer-events: none; Prevents all mouse events */
+			  opacity: 0.8; /* Optional: adds a faded look */
+			}
+			
+			
 		.auto-style5 {
           font-family: Verdana, Geneva, Tahoma, sans-serif;
           font-size: large;
@@ -63,6 +72,7 @@
           font-family: Verdana, Geneva, Tahoma, sans-serif;
           font-size: 8pt;
           text-align: left;
+		  font-color: #2A507E;
 		  width: 100px;
 		  overflow: hidden;
           }
@@ -1038,6 +1048,79 @@ if (answer) {
 
 }
 
+
+
+function handle_get_devicebyemail()
+{
+     $.unblockUI();
+
+}
+
+
+function get_devicebyemail(index)
+{
+
+	//getDeviceList(myUserEmail[index]);
+	
+        $.blockUI({ 
+     message: '<h1>Search in progress...</h1>',    
+     css: {             
+     border: 'none',             
+     padding: '15px',             
+     backgroundColor: '#000', 
+        
+     '-webkit-border-radius': '10px',             
+     '-moz-border-radius': '10px',             
+     opacity: .5,             
+     color: '#fff'         
+     } }); 
+
+	var devicedataurl;
+	
+	var encodedEmail = encodeURIComponent(myUserEmail[index]);
+	
+
+	
+		devicedataurl = `https://www.helmsmart-cloud.com/getdevicesbyemail?useremail=${encodedEmail}`;
+	
+	
+  
+	
+	
+
+    return $.ajax({
+    //async: false,
+    cache: false,
+    url: devicedataurl,
+    dataType: "json",
+    timeout: 10000,
+    statusCode: {
+    404: function() {      alert( "page not found" );    },
+    200: function() {      }
+    },
+    success: function(response) {
+    handleGetDeviceData(response)
+    },
+    complete: function() {
+    // unblock when remote call returns
+    // document.getElementById("SearchStatus").innerHTML = "Search Complete";
+    //   ShowGraphSmartChart(gindex);
+    //$.unblockUI();
+    },
+    error: function(request,status,errorThrown) {
+    //document.getElementById("SearchStatus").innerHTML = "Search Error";
+    $.unblockUI();
+    }
+    });	
+	
+	
+	
+	
+	
+}
+
+
+
 }
 function handle_get_deviceView()
 {
@@ -1120,6 +1203,7 @@ function handleGetDeviceData(response)
 {
   var index=0;
   var active_index=0xFFFF;
+  var cellindex=0;
 
   $.unblockUI();
 
@@ -1143,19 +1227,21 @@ var table = document.getElementById("DeviceData");
 	myAlertSMS.length=0;
 	myDeviceName.length=0;
 	myDeviceID.length=0;
+	myUserEmail.length=0;
 	myDeviceKey.length=0;
 	myDeviceStatus.length=0;
 	myDeviceApiCount.length=0;	
 	mySubscriptionType.length=0;	
 	mySubscriptionExpires.length=0;	
 	
-  response.records.forEach(function(row){
+    response.records.forEach(function(row){
   
   
      // document.getElementById("DeviceTypeID").options[index++] = new Option(row[0] + ":" + row[1], row[0]);
 	// document.getElementById("DeviceTypeID").options[index] = new Option(row[3] , row[3]);
 	 
 	myDeviceKey.push(row[0]); 
+	myUserEmail.push(row[2]);
 	myDeviceID.push(row[3]);
 	myDeviceName.push(row[5]);	
 	myDeviceStatus.push(row[6]);	
@@ -1168,10 +1254,11 @@ var table = document.getElementById("DeviceData");
  
 	var ssrow = table.insertRow(1);
 
-
+		cellindex=0;
 	
 		// DeviceID
-	    var cell0 = ssrow.insertCell(0);
+		//document.getElementById('header0').textContent = "Device ID"
+	    var cell0 = ssrow.insertCell(cellindex++);
 		//cell0.innerHTML = row[3];
 		cell0.innerHTML = '<a href="#" onclick="get_deviceView(' + index + '); return false;">' + row[3] + '</a>';
 		
@@ -1184,107 +1271,136 @@ var table = document.getElementById("DeviceData");
 		
 		
 		// Device Name
-		 var cell1 = ssrow.insertCell(1);
+		//document.getElementById('header1').textContent = "Name
+		var cell1 = ssrow.insertCell(cellindex++);
 		cell1.innerHTML = row[5];
 		cell1.style.textAlign = 'left';
 		cell1.style.width = '160px';
 		cell1.style.height = '25px';		
 		cell1.classList.add('truncate-text'); 
-		cell1.classList.add('auto-style7'); 		
-		
-		//Alert Email
-		var cell2 = ssrow.insertCell(2);
-		
-		if( gAWSAccountType == 'admin' && gAWSuserid == '000000000000')
-		{
-			cell2.innerHTML = row[2];
-		}
-		else
-		{
-			cell2.innerHTML = row[7];
-		}
-		
-		
+		cell1.classList.add('auto-style7'); 	
+
+		/*
+		// User Email
+		var cell2 = ssrow.insertCell(cellindex++);
+		cell2.innerHTML = row[2];
 		cell2.style.textAlign = 'left';
 		cell2.style.width = '160px';
 		cell2.style.height = '25px';		
 		cell2.classList.add('truncate-text'); 
 		cell2.classList.add('auto-style7'); 
+		*/
 		
-
-		
-		//if(	myDeviceID[index].toUpperCase() == gAWSuserid.toUpperCase() )
+		//Alert Email
+		var cell3 = ssrow.insertCell(cellindex++);
+		/*
+		if( !(gAWSAccountType == 'admin' && gAWSuserid == 'FFFFFFFFFFFF'))
 		{
-			cell2.style.color = '#75051A';
-			if(row[15] == true)
-				cell2.style.color = '#057552';
-		}
-		
-		// Alert SMS
-		var cell3 = ssrow.insertCell(3);
-		cell3.innerHTML = row[8];
-		cell3.style.textAlign = 'left';
-		cell3.style.width = '100px';
-		cell3.style.height = '25px';		
-		cell3.classList.add('auto-style7'); 
-
-		
-		//if(	myDeviceID[index].toUpperCase() == gAWSuserid.toUpperCase() )
-		{
+			//document.getElementById('header2').textContent = "Alert Email"
+			cell3.innerHTML = row[7];
+			
+			cell3.style.textAlign = 'left';
+			cell3.style.width = '160px';
+			cell3.style.height = '25px';		
+			cell3.classList.add('truncate-text'); 
+			cell3.classList.add('auto-style7'); 
+			
 			cell3.style.color = '#75051A';
-			if(row[16] == true)
-				cell3.style.color = '#057552';
+			if(row[15] == true)
+			cell3.style.color = '#057552';
+			
+		}
+		*/
+		//else
+		{
+			//cell3.innerHTML = row[7];
+			//document.getElementById('header2').textContent = "User Email"
+			cell3.innerHTML = '<a href="#" onclick="get_devicebyemail(' + index + '); return false;">' + row[2] + '</a>';
+			
+			cell3.style.textAlign = 'left';
+			cell3.style.width = '160px';
+			cell3.style.height = '25px';		
+			cell3.classList.add('truncate-text'); 
+			cell3.classList.add('auto-style7'); 
+			cell3.style.color = '#75051A';
+
 		}
 		
-		//Subscritpion Type
-		var cell4 = ssrow.insertCell(4);
-		cell4.innerHTML = row[11];
-		cell4.style.textAlign = 'center';	
-		cell4.style.width = '80px';
-		cell4.style.height = '25px';		
-		cell4.classList.add('auto-style7'); 
 		
-		//Subscritpion expires
-		var cell5 = ssrow.insertCell(5);
-		cell5.innerHTML = row[14];
+
+		/*
+		if( !(gAWSAccountType == 'admin' && gAWSuserid == 'FFFFFFFFFFFF'))
+		{
+			// Alert SMS
+			var cell4 = ssrow.insertCell(cellindex++);
+			cell4.innerHTML = row[8];
+			cell4.style.textAlign = 'left';
+			cell4.style.width = '100px';
+			cell4.style.height = '25px';		
+			cell4.classList.add('auto-style7'); 
+
+			
+			//if(	myDeviceID[index].toUpperCase() == gAWSuserid.toUpperCase() )
+			{
+				cell4.style.color = '#75051A';
+				if(row[16] == true)
+					cell4.style.color = '#057552';
+			}
+		}
+		*/
+		//Subscritpion Type
+		var cell5 = ssrow.insertCell(cellindex++);
+		cell5.innerHTML = row[11];
 		cell5.style.textAlign = 'center';	
 		cell5.style.width = '80px';
 		cell5.style.height = '25px';		
-		cell5.classList.add('auto-style7'); 		
+		cell5.classList.add('auto-style7'); 
 		
-			// Device API Count
-		var cell6 = ssrow.insertCell(6);
-		cell6.innerHTML = row[9];
+		//Subscritpion expires
+		var cell6 = ssrow.insertCell(cellindex++);
+		cell6.innerHTML = row[14];
 		cell6.style.textAlign = 'center';	
-		cell6.style.width = '60px';
+		cell6.style.width = '80px';
 		cell6.style.height = '25px';		
 		cell6.classList.add('auto-style7'); 		
 		
+			// Device API Count
+		var cell7 = ssrow.insertCell(cellindex++);
+		cell7.innerHTML = row[9];
+		cell7.style.textAlign = 'center';	
+		cell7.style.width = '60px';
+		cell7.style.height = '25px';		
+		cell7.classList.add('auto-style7'); 		
+		
 		// Device Status
-		var cell7 = ssrow.insertCell(7);
+		var cell8 = ssrow.insertCell(cellindex++);
 		
 		if(parseInt(row[4]) == 1 )
-			cell7.innerHTML = 'active';
+			cell8.innerHTML = 'active';
+		else if(parseInt(row[4]) == 2 )
+		{
+			cell8.innerHTML = 'on-line';
+			ssrow.classList.add('row-selected');
+		}
 		else
-			cell7.innerHTML = 'disabled';
+			cell8.innerHTML = 'disabled';
 			
-		cell7.style.textAlign = 'center';
-		cell7.style.width = '60px';
-		cell7.style.height = '25px';
-		cell7.classList.add('auto-style7'); 		
+		cell8.style.textAlign = 'center';
+		cell8.style.width = '60px';
+		cell8.style.height = '25px';
+		cell8.classList.add('auto-style7'); 		
 
 
 		
 		// Modfy button
-		var cell8 = ssrow.insertCell(8);
-		cell8.innerHTML = "<button id='btnSettingsEventSave' name='btnValue' value='modify' class='btn btn-primary' onclick='modifyData(" +  index + ");'>modify</button>";
-		cell8.style.textAlign = 'left';
-		cell8.style.width = '100px';
-		cell8.style.height = '25px';
-		cell8.classList.add('auto-style7'); 
+		var cell9 = ssrow.insertCell(cellindex++);
+		cell9.innerHTML = "<button id='btnSettingsEventSave' name='btnValue' value='modify' class='btn btn-primary' onclick='modifyData(" +  index + ");'>modify</button>";
+		cell9.style.textAlign = 'left';
+		cell9.style.width = '100px';
+		cell9.style.height = '25px';
+		cell9.classList.add('auto-style7'); 
 		
 		//if( gAWSAccountType != 'admin' &&  gAWSuserid != '000000000000')
-		//if( gAWSAccountType != 'admin' )
 		if( gAWSAccountType != 'admin' )
 		//if( gAWSuserid.toUpperCase() != 'FFFFFFFFFFFF' )
 		{
@@ -1304,12 +1420,23 @@ var table = document.getElementById("DeviceData");
 		{
 			active_index = index;
 		}
+		/*
+		if( gAWSAccountType == 'admin' &&  gAWSuserid != '000000000000')
+		{
+			//check to disable row
+			if(	myDeviceID[index].toUpperCase() != gAWSuserid.toUpperCase() )
+			{
+				ssrow.classList.add('row-disabled');
+			}
+		}
+		*/
 		
 		index++;
 		
 		
 
   });
+
 
   
   //gAWSUsername
