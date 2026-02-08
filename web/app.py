@@ -2269,8 +2269,29 @@ def getdevicesbyemail_endpoint():
         
     records = cursor.fetchall()
 
+    active_records = []
+    
+    for record in records:
+      device_id = record[3]
+      
+      deviceid_active = mc.get(device_id + '_active' )
+      
+      if deviceid_active != "" and deviceid_active != None and deviceid_active is not None:
+        log.info('getdevicesbyemail_endpoint: deviceid_active found for device_id %s:  ', device_id)
+        
+        #record[4] = 2
+        newrecord = record[:4] + (2,) + record[5:]
+        
+      else:
+        log.info('getdevicesbyemail_endpoint: deviceid_active not found for device_id %s:  ', device_id)
+        #record[4] = 1
+        newrecord = record[:4] + (1,) + record[5:]
 
-    log.info('getdevicesbyemail_endpoint: records found for useremail %s:  ', records)    
+      log.info('getdevicesbyemail_endpoint: newrecord %s:  ', newrecord)
+
+      active_records.append(newrecord)
+      
+    log.info('getdevicesbyemail_endpoint: records found for useremail %s:  ', active_records)    
 
     def type_for(type_code):
       return {
@@ -2290,7 +2311,7 @@ def getdevicesbyemail_endpoint():
     result = json.dumps(
       dict(
         schema=schema,
-        records=records
+        records=active_records
       ),
       cls=DateEncoder
     )
@@ -2347,8 +2368,31 @@ def getalldevices():
         
     records = cursor.fetchall()
 
+    log.info('getalldevices: records found for useremail %s:  ', records)
 
-    log.info('getalldevices: records found for useremail %s:  ', records)    
+    active_records = []
+    
+    for record in records:
+      device_id = record[3]
+      
+      deviceid_active = mc.get(device_id + '_active' )
+      
+      if deviceid_active != "" and deviceid_active != None and deviceid_active is not None:
+        log.info('getalldevices: deviceid_active found for device_id %s:  ', device_id)
+        
+        #record[4] = 2
+        newrecord = record[:4] + (2,) + record[5:]
+        
+      else:
+        log.info('getalldevices: deviceid_active not found for device_id %s:  ', device_id)
+        #record[4] = 1
+        newrecord = record[:4] + (1,) + record[5:]
+
+      log.info('getalldevices: newrecord %s:  ', newrecord)
+
+      active_records.append(newrecord)
+
+    log.info('getalldevices: records found for useremail %s:  ', active_records)    
 
     def type_for(type_code):
       return {
@@ -2368,7 +2412,7 @@ def getalldevices():
     result = json.dumps(
       dict(
         schema=schema,
-        records=records
+        records=active_records
       ),
       cls=DateEncoder
     )
