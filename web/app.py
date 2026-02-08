@@ -1,7 +1,8 @@
 import os
 from os import environ
 from os import environ as env, path
-import pylibmc  
+import pylibmc
+import bmemcached
 import sys
 import json
 from threading import Thread
@@ -193,6 +194,12 @@ mcservers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
 mcuser = os.environ.get('MEMCACHIER_USERNAME', '')
 mcpass = os.environ.get('MEMCACHIER_PASSWORD', '')
 
+
+mc = bmemcached.Client(mcservers, username=mcuser, password=mcpassw)
+
+mc.enable_retry_delay(True)  # Enabled by default. Sets retry delay to 5s.
+
+"""
 mc = pylibmc.Client(mcservers, binary=True,
                     username=mcuser, password=mcpass,
                     behaviors={
@@ -215,7 +222,7 @@ mc = pylibmc.Client(mcservers, binary=True,
                       'dead_timeout': 30,
                     })
 
-
+"""
 
 
 # Application routes for web server
@@ -2375,9 +2382,11 @@ def getalldevices():
     active_records = []
     
     for record in records:
+      log.info('getalldevices: record found for useremail %s:  ', record)
       device_id = record[3]
-      
+      log.info('getalldevices: record found for device_id %s:  ', device_id)
       deviceid_active = mc.get(device_id + '_active' )
+      log.info('getalldevices: record found for deviceid_active %s:  ', deviceid_active)
       
       if deviceid_active != "" and deviceid_active != None and deviceid_active is not None:
         log.info('getalldevices: deviceid_active found for device_id %s:  ', device_id)
