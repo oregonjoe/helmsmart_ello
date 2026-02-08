@@ -1501,7 +1501,7 @@ function getDeviceList(useremail)
 	var encodedEmail = encodeURIComponent(useremail);
 	
 	//devicedataurl = "https://helmsmart-ello.herokuapp.com/updatedevice?deviceapikey=" + document.getElementById("DeviceKey").value; 
-	
+	/*
 	if( gAWSAccountType == 'admin' &&  gAWSuserid == 'FFFFFFFFFFFF')
 	{
 		devicedataurl = `https://helmsmart-ello.herokuapp.com/getalldevices`;
@@ -1510,8 +1510,9 @@ function getDeviceList(useremail)
 	{
 		devicedataurl = `https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=${encodedEmail}`;
 	}
+	*/
 	
-  
+	devicedataurl = `https://helmsmart-ello.herokuapp.com/getdevicesbyemail?useremail=${encodedEmail}`;
 	
 	
 
