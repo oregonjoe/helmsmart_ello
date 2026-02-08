@@ -2269,6 +2269,8 @@ def getdevicesbyemail_endpoint():
         
     records = cursor.fetchall()
 
+    log.info('getdevicesbyemail_endpoint: newrecord %s:  ', records)
+
     active_records = []
     
     for record in records:
