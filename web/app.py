@@ -192,7 +192,7 @@ email_ses_client = boto3.client('ses', aws_access_key_id=environ.get('AWS_ACCESS
 
 mcservers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
 mcuser = os.environ.get('MEMCACHIER_USERNAME', '')
-mcpass = os.environ.get('MEMCACHIER_PASSWORD', '')
+mcpassw = os.environ.get('MEMCACHIER_PASSWORD', '')
 
 
 mc = bmemcached.Client(mcservers, username=mcuser, password=mcpassw)
